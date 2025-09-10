@@ -1,0 +1,30 @@
+GET /api/initiatives?status=%E8%A8%88%E7%94%BB%E4%B8%AD&status=%E5%AE%9F%E6%96%BD%E4%B8%AD 500 in 399ms
+Error fetching initiatives: Error: 9 FAILED_PRECONDITION: The query requires an index. You can create it here: https://console.firebase.google.com/v1/r/project/venus-ark-aix/firestore/indexes?create_composite=ClFwcm9qZWN0cy92ZW51cy1hcmstYWl4L2RhdGFiYXNlcy8oZGVmYXVsdCkvY29sbGVjdGlvbkdyb3Vwcy9pbml0aWF0aXZlcy9pbmRleGVzL18QARoKCgZzdGF0dXMQARoNCgl1cGRhdGVkQXQQAhoMCghfX25hbWVfXxAC
+    at getInitiatives (lib\firestore\initiatives.ts:43:38)
+    at GET (app\api\initiatives\route.ts:23:45)
+  41 |     }
+  42 |
+> 43 |     const querySnapshot = await query.get();
+     |                                      ^
+  44 |
+  45 |     const initiatives: InitiativeDetail[] = [];
+  46 |      {
+  code: 9,
+  details: 'The query requires an index. You can create it here: https://console.firebase.google.com/v1/r/project/venus-ark-aix/firestore/indexes?create_composite=ClFwcm9qZWN0cy92ZW51cy1hcmstYWl4L2RhdGFiYXNlcy8oZGVmYXVsdCkvY29sbGVjdGlvbkdyb3Vwcy9pbml0aWF0aXZlcy9pbmRleGVzL18QARoKCgZzdGF0dXMQARoNCgl1cGRhdGVkQXQQAhoMCghfX25hbWVfXxAC',
+  metadata: [Metadata]
+}
+Error fetching initiatives: Error: 9 FAILED_PRECONDITION: The query requires an index. You can create it here: https://console.firebase.google.com/v1/r/project/venus-ark-aix/firestore/indexes?create_composite=ClFwcm9qZWN0cy92ZW51cy1hcmstYWl4L2RhdGFiYXNlcy8oZGVmYXVsdCkvY29sbGVjdGlvbkdyb3Vwcy9pbml0aWF0aXZlcy9pbmRleGVzL18QARoKCgZzdGF0dXMQARoNCgl1cGRhdGVkQXQQAhoMCghfX25hbWVfXxAC
+    at getInitiatives (lib\firestore\initiatives.ts:43:38)
+    at GET (app\api\initiatives\route.ts:23:45)
+  41 |     }
+  42 |
+> 43 |     const querySnapshot = await query.get();
+     |                                      ^
+  44 |
+  45 |     const initiatives: InitiativeDetail[] = [];
+  46 |      {
+  code: 9,
+  details: 'The query requires an index. You can create it here: https://console.firebase.google.com/v1/r/project/venus-ark-aix/firestore/indexes?create_composite=ClFwcm9qZWN0cy92ZW51cy1hcmstYWl4L2RhdGFiYXNlcy8oZGVmYXVsdCkvY29sbGVjdGlvbkdyb3Vwcy9pbml0aWF0aXZlcy9pbmRleGVzL18QARoKCgZzdGF0dXMQARoNCgl1cGRhdGVkQXQQAhoMCghfX25hbWVfXxAC',
+  metadata: [Metadata]
+}
+ GET /api/initiatives?status=%E8%A8%88%E7%94%BB%E4%B8%AD&status=%E5%AE%9F%E6%96%BD%E4%B8%AD 500 in 463ms

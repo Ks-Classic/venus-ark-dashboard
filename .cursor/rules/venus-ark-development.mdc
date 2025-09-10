@@ -1,0 +1,105 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Venus Ark 週次レポートシステム 開発ルール
+
+## プロジェクト概要
+Venus Arkの採用から稼働までの全プロセスをデジタル化し、週次レポート作成時間を4時間から24分以内に短縮することを目標とするNext.js + Firestore + TypeScriptプロジェクト。
+
+## 技術スタック
+- **フレームワーク**: Next.js 15.2.4 (App Router)
+- **言語**: TypeScript
+- **データベース**: Firebase Firestore
+- **UIライブラリ**: shadcn/ui, Tailwind CSS
+- **外部API**: Google Sheets API, Notion API, Gemini API
+
+## ファイル構造とアーキテクチャ
+
+### 主要ディレクトリ
+- [app/](mdc:app) - Next.jsページとAPIルート
+- [components/](mdc:components) - UIコンポーネント
+- [lib/](mdc:lib) - ビジネスロジック、API連携、データ処理
+- [scripts/](mdc:scripts) - データ同期・分析スクリプト
+- [docs/](mdc:docs) - プロジェクトドキュメント
+
+### 重要な設定ファイル
+- [package.json](mdc:package.json) - 依存関係とスクリプト定義
+- [firestore.rules](mdc:firestore.rules) - Firestoreセキュリティルール
+- [firestore.indexes.json](mdc:firestore.indexes.json) - Firestoreインデックス設定
+
+### 開発計画参照
+- [docs/01_development_plan.md](mdc:docs/01_development_plan.md) - 詳細なTODOリストと実装計画
+- [docs/02_data_architecture.md](mdc:docs/02_data_architecture.md) - データモデルとFirestore構造
+- [docs/03_environment_setup.md](mdc:docs/03_environment_setup.md) - 環境設定ガイド
+
+## 開発ルール
+
+### 1. Git コミット規則
+- **各タスク完了時に必ずコミット**
+- コミットメッセージ形式: `type: description`
+  - `feat:` 新機能追加
+  - `fix:` バグ修正
+  - `docs:` ドキュメント更新
+  - `refactor:` リファクタリング
+  - `test:` テスト追加・修正
+  - `chore:` その他の変更
+
+### 2. 実装優先順位
+Phase 1（最優先）: 採用レポート自動化
+1. データ基盤構築（Firebase設定、型定義）
+2. Google Sheets連携とデータ処理
+3. Firestoreデータ同期
+4. 週次集計ロジック
+5. UI実装（基本機能）
+
+### 3. TypeScript型定義
+- [lib/types/application.ts](mdc:lib/types/application.ts) - 採用応募データ型
+- 新しい型は必ず`lib/types/`ディレクトリに配置
+- インターフェース名は大文字始まり（PascalCase）
+
+### 4. API連携
+- [lib/integrations/google-sheets.ts](mdc:lib/integrations/google-sheets.ts) - Google Sheets API
+- [lib/integrations/notion-meeting-analysis.ts](mdc:lib/integrations/notion-meeting-analysis.ts) - Notion API
+- エラーハンドリングとレート制限対応を必須実装
+
+### 5. データ処理
+- 名寄せ処理: 氏名正規化（全角・半角統一、スペース除去）
+- 複合キー判定: normalizedName + email/phone
+- 週次集計: 土曜日〜金曜日の週単位
+
+### 6. UI/UX
+- shadcn/uiコンポーネントを優先使用
+- レスポンシブデザイン必須
+- 職種別タブ機能
+- コメント・考察入力機能
+
+### 7. セキュリティ
+- 環境変数は`.env.local`で管理
+- Firestoreセキュリティルールの適切な設定
+- 個人情報の適切な取り扱い
+
+### 8. パフォーマンス
+- Google Sheets APIレート制限: 100リクエスト/100秒
+- Firestore読み取り制限: 1日50,000回
+- ページ読み込み時間: 3秒以内目標
+
+### 9. テスト・品質管理
+- データ同期成功率: 99%以上
+- 重複率: 5%以下
+- 手動エラー: 90%削減目標
+
+## 実装時の注意点
+1. **名寄せ問題**: 「山田 太郎」「山田太郎」「ヤマダタロウ」の表記揺れ対応
+2. **データ分散**: Google Sheets（採用）+ Notion（稼働者）の一元化
+3. **週次集計**: 土曜日開始の週単位計算
+4. **職種管理**: SNS運用、動画クリエイター、AIライター、撮影スタッフの4職種
+5. **継続率計算**: 案件解除vs契約解除の区別
+
+## 開発進行
+- 数時間での完了を目標
+- TODOリストに従った段階的実装
+- 各タスク完了時のgitコミット必須
+- ドキュメント参照による正確な実装
+

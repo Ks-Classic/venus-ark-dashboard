@@ -1,0 +1,118 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // 開発環境用の基本ルール
+    // 本番環境では認証済みユーザーのみアクセス可能にする必要があります
+    
+    // applications コレクション (採用データ)
+    match /applications/{applicationId} {
+      allow read, write: if true; // 開発用: 全アクセス許可
+      // 本番用 (後で有効化):
+      // allow read, write: if request.auth != null;
+    }
+    
+    // members コレクション (メンバーデータ)
+    match /members/{memberId} {
+      allow read, write: if true; // 開発用: 全アクセス許可
+      // 本番用 (後で有効化):
+      // allow read, write: if request.auth != null;
+      
+      // activity_history サブコレクション
+      match /activity_history/{activityId} {
+        allow read, write: if true; // 開発用: 全アクセス許可
+      }
+    }
+    
+    // projects コレクション (案件データ)
+    match /projects/{projectId} {
+      allow read, write: if true; // 開発用: 全アクセス許可
+      // 本番用 (後で有効化):
+      // allow read, write: if request.auth != null;
+    }
+    
+    // reports コレクション (レポートデータ)
+    match /reports/{reportId} {
+      allow read, write: if true; // 開発用: 全アクセス許可
+      // 本番用 (後で有効化):
+      // allow read, write: if request.auth != null;
+    }
+    
+    // sync_logs コレクション (同期ログ)
+    match /sync_logs/{logId} {
+      allow read, write: if true; // 開発用: 全アクセス許可
+      // 本番用 (後で有効化):
+      // allow read: if request.auth != null;
+      // allow write: if false; // システムのみ書き込み可能
+    }
+    
+    // initiatives コレクション (施策データ)
+    match /initiatives/{initiativeId} {
+      allow read, write: if true; // 開発用: 全アクセス許可
+      // 本番用 (後で有効化):
+      // allow read, write: if request.auth != null;
+    }
+    
+    // initiative_versions コレクション (施策バージョン履歴)
+    match /initiative_versions/{versionId} {
+      allow read, write: if true; // 開発用: 全アクセス許可
+      // 本番用 (後で有効化):
+      // allow read, write: if request.auth != null;
+    }
+    
+    // weekly_reports コレクション (週次レポート)
+    match /weekly_reports/{reportId} {
+      allow read, write: if true; // 開発用: 全アクセス許可
+      // 本番用 (後で有効化):
+      // allow read, write: if request.auth != null;
+    }
+    
+    // recruitment_comments コレクション (採用コメント)
+    match /recruitment_comments/{commentId} {
+      allow read, write: if true; // 開発用: 全アクセス許可
+      // 本番用 (後で有効化):
+      // allow read, write: if request.auth != null;
+    }
+    
+    // report_comments コレクション (レポートコメント)
+    match /report_comments/{commentId} {
+      allow read, write: if true; // 開発用: 全アクセス許可
+      // 本番用 (後で有効化):
+      // allow read, write: if request.auth != null;
+    }
+    
+    // recruitment_detail_items コレクション (採用詳細項目)
+    match /recruitment_detail_items/{itemId} {
+      allow read, write: if true; // 開発用: 全アクセス許可
+      // 本番用 (後で有効化):
+      // allow read, write: if request.auth != null;
+    }
+    
+    // その他のドキュメントへのアクセスを拒否
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
+
+/*
+本番環境用のセキュリティルール例:
+
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // 認証済みユーザーのみアクセス可能
+    match /{document=**} {
+      allow read, write: if request.auth != null && 
+        request.auth.token.email_verified == true;
+    }
+    
+    // 管理者のみ書き込み可能なコレクション
+    match /sync_logs/{logId} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null && 
+        request.auth.token.admin == true;
+    }
+  }
+}
+*/ 

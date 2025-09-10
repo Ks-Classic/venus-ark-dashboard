@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    .container { text-align: center; }
+    select { padding: 10px; font-size: 16px; margin: 10px; width: 200px; }
+    button { padding: 10px 20px; font-size: 16px; background-color: #4285f4; color: white; border: none; border-radius: 4px; cursor: pointer; }
+    button:hover { background-color: #3367d6; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h3>対象週を選択してください</h3>
+    <select id="weekSelect">
+      <?!= weeks.map(week => `<option value="${week}">${week}</option>`).join('') ?>
+    </select>
+    <br>
+    <button onclick="selectWeek()">件数を取得</button>
+  </div>
+  
+  <script>
+    function selectWeek() {
+      const weekSelect = document.getElementById('weekSelect');
+      const selectedWeek = weekSelect.value;
+      
+      if (selectedWeek) {
+        google.script.run
+          .withSuccessHandler(function() {
+            google.script.host.close();
+          })
+          .withFailureHandler(function(error) {
+            alert('エラーが発生しました: ' + error.message);
+          })
+          .processSelectedWeek(selectedWeek);
+      }
+    }
+  </script>
+</body>
+</html>

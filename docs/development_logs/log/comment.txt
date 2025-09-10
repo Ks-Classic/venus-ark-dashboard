@@ -1,0 +1,253 @@
+FirebaseError: Function addDoc() called with invalid data. Unsupported field value: undefined (found in field sourceData.rowLabel in document recruitment_detail_items/uhgthLdTX6eUvcKWwy3x)
+
+components\ui\button.tsx (46:7) @ _c
+
+
+  44 |     const Comp = asChild ? Slot : "button"
+  45 |     return (
+> 46 |       <Comp
+     |       ^
+  47 |         className={cn(buttonVariants({ variant, size, className }))}
+  48 |         ref={ref}
+  49 |         {...props}
+Call Stack
+6
+
+Show 1 ignore-listed frame(s)
+button
+<anonymous> (0:0)
+_c
+components\ui\button.tsx (46:7)
+DetailItemModal
+components\detail-item-modal.tsx (124:11)
+RecruitmentDashboard
+components\recruitment-dashboard.tsx (234:7)
+VenusArkDashboard
+app\page.tsx (106:13)
+
+
+
+content.js:1 Uncaught (in promise) The message port closed before a response was received.
+（匿名） @ content.js:1このエラーを分析
+C:\Users\ykoha\OneDrive\ドキュメント\デスクトップ\ケーズ・クラシック\01.cクライアント\Venus Ark\レポートプロジェクト\venus-ark-dashboard\components\detail-item-modal.tsx:33 [Modal] Rendering. isOpen: true sourceData: {weekId: 'empty-2025-7-3', category: 'collection', subCategory: 'main', metric: 'applicationContinuing', value: 0, …} initialData: undefined
+C:\Users\ykoha\OneDrive\ドキュメント\デスクトップ\ケーズ・クラシック\01.cクライアント\Venus Ark\レポートプロジェクト\venus-ark-dashboard\components\detail-item-modal.tsx:33 [Modal] Rendering. isOpen: true sourceData: {weekId: 'empty-2025-7-3', category: 'collection', subCategory: 'main', metric: 'applicationContinuing', value: 0, …} initialData: undefined
+C:\Users\ykoha\OneDrive\ドキュメント\デスクトップ\ケーズ・クラシック\01.cクライアント\Venus Ark\レポートプロジェクト\venus-ark-dashboard\components\detail-item-modal.tsx:33 [Modal] Rendering. isOpen: true sourceData: {weekId: 'empty-2025-7-3', category: 'collection', subCategory: 'main', metric: 'applicationContinuing', value: 0, …} initialData: undefined
+C:\Users\ykoha\OneDrive\ドキュメント\デスクトップ\ケーズ・クラシック\01.cクライアント\Venus Ark\レポートプロジェクト\venus-ark-dashboard\components\detail-item-modal.tsx:33 [Modal] Rendering. isOpen: true sourceData: {weekId: 'empty-2025-7-3', category: 'collection', subCategory: 'main', metric: 'applicationContinuing', value: 0, …} initialData: undefined
+C:\Users\ykoha\OneDrive\ドキュメント\デスクトップ\ケーズ・クラシック\01.cクライアント\Venus Ark\レポートプロジェクト\venus-ark-dashboard\components\detail-item-modal.tsx:33 [Modal] Rendering. isOpen: true sourceData: {weekId: 'empty-2025-7-3', category: 'collection', subCategory: 'main', metric: 'applicationContinuing', value: 0, …} initialData: undefined
+C:\Users\ykoha\OneDrive\ドキュメント\デスクトップ\ケーズ・クラシック\01.cクライアント\Venus Ark\レポートプロジェクト\venus-ark-dashboard\components\detail-item-modal.tsx:33 [Modal] Rendering. isOpen: true sourceData: {weekId: 'empty-2025-7-3', category: 'collection', subCategory: 'main', metric: 'applicationContinuing', value: 0, …} initialData: undefined
+C:\Users\ykoha\OneDrive\ドキュメント\デスクトップ\ケーズ・クラシック\01.cクライアント\Venus Ark\レポートプロジェクト\venus-ark-dashboard\components\detail-item-modal.tsx:33 [Modal] Rendering. isOpen: true sourceData: {weekId: 'empty-2025-7-3', category: 'collection', subCategory: 'main', metric: 'applicationContinuing', value: 0, …} initialData: undefined
+C:\Users\ykoha\OneDrive\ドキュメント\デスクトップ\ケーズ・クラシック\01.cクライアント\Venus Ark\レポートプロジェクト\venus-ark-dashboard\components\detail-item-modal.tsx:33 [Modal] Rendering. isOpen: true sourceData: {weekId: 'empty-2025-7-3', category: 'collection', subCategory: 'main', metric: 'applicationContinuing', value: 0, …} initialData: undefined
+C:\Users\ykoha\OneDrive\ドキュメント\デスクトップ\ケーズ・クラシック\01.cクライアント\Venus Ark\レポートプロジェクト\venus-ark-dashboard\components\recruitment-dashboard.tsx:122 [Dashboard] handleDetailItemSave: data received: {title: 'undefined：0件 (empty-2025-7-3)', comment: 'ｒｗｇ」'}
+C:\Users\ykoha\OneDrive\ドキュメント\デスクトップ\ケーズ・クラシック\01.cクライアント\Venus Ark\レポートプロジェクト\venus-ark-dashboard\components\recruitment-dashboard.tsx:123 [Dashboard] handleDetailItemSave: sourceData from modal state: {weekId: 'empty-2025-7-3', category: 'collection', subCategory: 'main', metric: 'applicationContinuing', value: 0, …}
+C:\Users\ykoha\OneDrive\ドキュメント\デスクトップ\ケーズ・クラシック\01.cクライアント\Venus Ark\レポートプロジェクト\venus-ark-dashboard\components\recruitment-dashboard.tsx:133 [Dashboard] Calling addItem with: {weekId: 'empty-2025-7-3', category: 'collection', subCategory: 'main', metric: 'applicationContinuing', value: 0, …} undefined：0件 (empty-2025-7-3) ｒｗｇ」
+C:\Users\ykoha\OneDrive\ドキュメント\デスクトップ\ケーズ・クラシック\01.cクライアント\Venus Ark\レポートプロジェクト\venus-ark-dashboard\hooks\use-detail-items.ts:66 [useDetailItems] addItem called with: {cellData: {…}, title: 'undefined：0件 (empty-2025-7-3)', comment: 'ｒｗｇ」'}
+C:\Users\ykoha\OneDrive\ドキュメント\デスクトップ\ケーズ・クラシック\01.cクライアント\Venus Ark\レポートプロジェクト\venus-ark-dashboard\hooks\use-detail-items.ts:87 [useDetailItems] Attempting to add new item to Firestore: {title: 'undefined：0件 (empty-2025-7-3)', comment: 'ｒｗｇ」', sourceData: {…}, order: 2, createdAt: Wed Jul 16 2025 16:20:17 GMT+0900 (日本標準時), …}
+C:\Users\ykoha\OneDrive\ドキュメント\デスクトップ\ケーズ・クラシック\01.cクライアント\Venus Ark\レポートプロジェクト\venus-ark-dashboard\hooks\use-detail-items.ts:92 Error adding detail item: FirebaseError: Function addDoc() called with invalid data. Unsupported field value: undefined (found in field sourceData.rowLabel in document recruitment_detail_items/uhgthLdTX6eUvcKWwy3x)
+error @ intercept-console-error.js:50
+useDetailItems.useCallback[addItem] @ C:\Users\ykoha\OneDrive\ドキュメント\デスクトップ\ケーズ・クラシック\01.cクライアント\Venus Ark\レポートプロジェクト\venus-ark-dashboard\hooks\use-detail-items.ts:92
+handleDetailItemSave @ C:\Users\ykoha\OneDrive\ドキュメント\デスクトップ\ケーズ・クラシック\01.cクライアント\Venus Ark\レポートプロジェクト\venus-ark-dashboard\components\recruitment-dashboard.tsx:134
+handleSave @ C:\Users\ykoha\OneDrive\ドキュメント\デスクトップ\ケーズ・クラシック\01.cクライアント\Venus Ark\レポートプロジェクト\venus-ark-dashboard\components\detail-item-modal.tsx:63
+executeDispatch @ react-dom-client.development.js:16427
+runWithFiberInDEV @ react-dom-client.development.js:1511
+processDispatchQueue @ react-dom-client.development.js:16477
+eval @ react-dom-client.development.js:17075
+batchedUpdates$1 @ react-dom-client.development.js:3254
+dispatchEventForPluginEventSystem @ react-dom-client.development.js:16631
+dispatchEvent @ react-dom-client.development.js:20717
+dispatchDiscreteEvent @ react-dom-client.development.js:20685
+<button>
+exports.jsxDEV @ react-jsx-dev-runtime.development.js:326
+_c @ C:\Users\ykoha\OneDrive\ドキュメント\デスクトップ\ケーズ・クラシック\01.cクライアント\Venus Ark\レポートプロジェクト\venus-ark-dashboard\components\ui\button.tsx:46
+react-stack-bottom-frame @ react-dom-client.development.js:23950
+renderWithHooksAgain @ react-dom-client.development.js:5179
+renderWithHooks @ react-dom-client.development.js:5091
+updateForwardRef @ react-dom-client.development.js:8072
+beginWork @ react-dom-client.development.js:10284
+runWithFiberInDEV @ react-dom-client.development.js:1511
+performUnitOfWork @ react-dom-client.development.js:15120
+workLoopSync @ react-dom-client.development.js:14944
+renderRootSync @ react-dom-client.development.js:14924
+performWorkOnRoot @ react-dom-client.development.js:14411
+performSyncWorkOnRoot @ react-dom-client.development.js:16290
+flushSyncWorkAcrossRoots_impl @ react-dom-client.development.js:16138
+processRootScheduleInMicrotask @ react-dom-client.development.js:16175
+eval @ react-dom-client.development.js:16309
+<Button>
+exports.jsxDEV @ react-jsx-dev-runtime.development.js:326
+DetailItemModal @ C:\Users\ykoha\OneDrive\ドキュメント\デスクトップ\ケーズ・クラシック\01.cクライアント\Venus Ark\レポートプロジェクト\venus-ark-dashboard\components\detail-item-modal.tsx:124
+react-stack-bottom-frame @ react-dom-client.development.js:23950
+renderWithHooksAgain @ react-dom-client.development.js:5179
+renderWithHooks @ react-dom-client.development.js:5091
+updateFunctionComponent @ react-dom-client.development.js:8328
+beginWork @ react-dom-client.development.js:9945
+runWithFiberInDEV @ react-dom-client.development.js:1511
+performUnitOfWork @ react-dom-client.development.js:15120
+workLoopSync @ react-dom-client.development.js:14944
+renderRootSync @ react-dom-client.development.js:14924
+performWorkOnRoot @ react-dom-client.development.js:14411
+performSyncWorkOnRoot @ react-dom-client.development.js:16290
+flushSyncWorkAcrossRoots_impl @ react-dom-client.development.js:16138
+processRootScheduleInMicrotask @ react-dom-client.development.js:16175
+eval @ react-dom-client.development.js:16309このエラーを分析
+C:\Users\ykoha\OneDrive\ドキュメント\デスクトップ\ケーズ・クラシック\01.cクライアント\Venus Ark\レポートプロジェクト\venus-ark-dashboard\components\detail-item-modal.tsx:33 [Modal] Rendering. isOpen: true sourceData: {weekId: 'empty-2025-7-3', category: 'collection', subCategory: 'main', metric: 'applicationContinuing', value: 0, …} initialData: undefined
+C:\Users\ykoha\OneDrive\ドキュメント\デスクトップ\ケーズ・クラシック\01.cクライアント\Venus Ark\レポートプロジェクト\venus-ark-dashboard\components\detail-item-modal.tsx:33 [Modal] Rendering. isOpen: true sourceData: {weekId: 'empty-2025-7-3', category: 'collection', subCategory: 'main', metric: 'applicationContinuing', value: 0, …} initialData: undefined
+C:\Users\ykoha\OneDrive\ドキュメント\デスクトップ\ケーズ・クラシック\01.cクライアント\Venus Ark\レポートプロジェクト\venus-ark-dashboard\components\recruitment-dashboard.tsx:139 Failed to save detail item: FirebaseError: Function addDoc() called with invalid data. Unsupported field value: undefined (found in field sourceData.rowLabel in document recruitment_detail_items/uhgthLdTX6eUvcKWwy3x)
+error @ intercept-console-error.js:50
+handleDetailItemSave @ C:\Users\ykoha\OneDrive\ドキュメント\デスクトップ\ケーズ・クラシック\01.cクライアント\Venus Ark\レポートプロジェクト\venus-ark-dashboard\components\recruitment-dashboard.tsx:139
+await in handleDetailItemSave
+handleSave @ C:\Users\ykoha\OneDrive\ドキュメント\デスクトップ\ケーズ・クラシック\01.cクライアント\Venus Ark\レポートプロジェクト\venus-ark-dashboard\components\detail-item-modal.tsx:63
+executeDispatch @ react-dom-client.development.js:16427
+runWithFiberInDEV @ react-dom-client.development.js:1511
+processDispatchQueue @ react-dom-client.development.js:16477
+eval @ react-dom-client.development.js:17075
+batchedUpdates$1 @ react-dom-client.development.js:3254
+dispatchEventForPluginEventSystem @ react-dom-client.development.js:16631
+dispatchEvent @ react-dom-client.development.js:20717
+dispatchDiscreteEvent @ react-dom-client.development.js:20685
+<button>
+exports.jsxDEV @ react-jsx-dev-runtime.development.js:326
+_c @ C:\Users\ykoha\OneDrive\ドキュメント\デスクトップ\ケーズ・クラシック\01.cクライアント\Venus Ark\レポートプロジェクト\venus-ark-dashboard\components\ui\button.tsx:46
+react-stack-bottom-frame @ react-dom-client.development.js:23950
+renderWithHooksAgain @ react-dom-client.development.js:5179
+renderWithHooks @ react-dom-client.development.js:5091
+updateForwardRef @ react-dom-client.development.js:8072
+beginWork @ react-dom-client.development.js:10284
+runWithFiberInDEV @ react-dom-client.development.js:1511
+performUnitOfWork @ react-dom-client.development.js:15120
+workLoopSync @ react-dom-client.development.js:14944
+renderRootSync @ react-dom-client.development.js:14924
+performWorkOnRoot @ react-dom-client.development.js:14411
+performSyncWorkOnRoot @ react-dom-client.development.js:16290
+flushSyncWorkAcrossRoots_impl @ react-dom-client.development.js:16138
+processRootScheduleInMicrotask @ react-dom-client.development.js:16175
+eval @ react-dom-client.development.js:16309
+<Button>
+exports.jsxDEV @ react-jsx-dev-runtime.development.js:326
+DetailItemModal @ C:\Users\ykoha\OneDrive\ドキュメント\デスクトップ\ケーズ・クラシック\01.cクライアント\Venus Ark\レポートプロジェクト\venus-ark-dashboard\components\detail-item-modal.tsx:124
+react-stack-bottom-frame @ react-dom-client.development.js:23950
+renderWithHooksAgain @ react-dom-client.development.js:5179
+renderWithHooks @ react-dom-client.development.js:5091
+updateFunctionComponent @ react-dom-client.development.js:8328
+beginWork @ react-dom-client.development.js:9945
+runWithFiberInDEV @ react-dom-client.development.js:1511
+performUnitOfWork @ react-dom-client.development.js:15120
+workLoopSync @ react-dom-client.development.js:14944
+renderRootSync @ react-dom-client.development.js:14924
+performWorkOnRoot @ react-dom-client.development.js:14411
+performSyncWorkOnRoot @ react-dom-client.development.js:16290
+flushSyncWorkAcrossRoots_impl @ react-dom-client.development.js:16138
+processRootScheduleInMicrotask @ react-dom-client.development.js:16175
+eval @ react-dom-client.development.js:16309このエラーを分析
+C:\Users\ykoha\OneDrive\ドキュメント\デスクトップ\ケーズ・クラシック\01.cクライアント\Venus Ark\レポートプロジェクト\venus-ark-dashboard\components\recruitment-dashboard.tsx:122 [Dashboard] handleDetailItemSave: data received: {title: 'undefined：0件 (empty-2025-7-3)', comment: 'ｒｗｇ」'}
+C:\Users\ykoha\OneDrive\ドキュメント\デスクトップ\ケーズ・クラシック\01.cクライアント\Venus Ark\レポートプロジェクト\venus-ark-dashboard\components\recruitment-dashboard.tsx:123 [Dashboard] handleDetailItemSave: sourceData from modal state: {weekId: 'empty-2025-7-3', category: 'collection', subCategory: 'main', metric: 'applicationContinuing', value: 0, …}
+C:\Users\ykoha\OneDrive\ドキュメント\デスクトップ\ケーズ・クラシック\01.cクライアント\Venus Ark\レポートプロジェクト\venus-ark-dashboard\components\recruitment-dashboard.tsx:133 [Dashboard] Calling addItem with: {weekId: 'empty-2025-7-3', category: 'collection', subCategory: 'main', metric: 'applicationContinuing', value: 0, …} undefined：0件 (empty-2025-7-3) ｒｗｇ」
+C:\Users\ykoha\OneDrive\ドキュメント\デスクトップ\ケーズ・クラシック\01.cクライアント\Venus Ark\レポートプロジェクト\venus-ark-dashboard\hooks\use-detail-items.ts:66 [useDetailItems] addItem called with: {cellData: {…}, title: 'undefined：0件 (empty-2025-7-3)', comment: 'ｒｗｇ」'}
+C:\Users\ykoha\OneDrive\ドキュメント\デスクトップ\ケーズ・クラシック\01.cクライアント\Venus Ark\レポートプロジェクト\venus-ark-dashboard\hooks\use-detail-items.ts:87 [useDetailItems] Attempting to add new item to Firestore: {title: 'undefined：0件 (empty-2025-7-3)', comment: 'ｒｗｇ」', sourceData: {…}, order: 2, createdAt: Wed Jul 16 2025 16:20:20 GMT+0900 (日本標準時), …}
+C:\Users\ykoha\OneDrive\ドキュメント\デスクトップ\ケーズ・クラシック\01.cクライアント\Venus Ark\レポートプロジェクト\venus-ark-dashboard\hooks\use-detail-items.ts:92 Error adding detail item: FirebaseError: Function addDoc() called with invalid data. Unsupported field value: undefined (found in field sourceData.rowLabel in document recruitment_detail_items/SAlHjPON2qC49l1SYAgp)
+error @ intercept-console-error.js:50
+useDetailItems.useCallback[addItem] @ C:\Users\ykoha\OneDrive\ドキュメント\デスクトップ\ケーズ・クラシック\01.cクライアント\Venus Ark\レポートプロジェクト\venus-ark-dashboard\hooks\use-detail-items.ts:92
+handleDetailItemSave @ C:\Users\ykoha\OneDrive\ドキュメント\デスクトップ\ケーズ・クラシック\01.cクライアント\Venus Ark\レポートプロジェクト\venus-ark-dashboard\components\recruitment-dashboard.tsx:134
+handleSave @ C:\Users\ykoha\OneDrive\ドキュメント\デスクトップ\ケーズ・クラシック\01.cクライアント\Venus Ark\レポートプロジェクト\venus-ark-dashboard\components\detail-item-modal.tsx:63
+executeDispatch @ react-dom-client.development.js:16427
+runWithFiberInDEV @ react-dom-client.development.js:1511
+processDispatchQueue @ react-dom-client.development.js:16477
+eval @ react-dom-client.development.js:17075
+batchedUpdates$1 @ react-dom-client.development.js:3254
+dispatchEventForPluginEventSystem @ react-dom-client.development.js:16631
+dispatchEvent @ react-dom-client.development.js:20717
+dispatchDiscreteEvent @ react-dom-client.development.js:20685
+<button>
+exports.jsxDEV @ react-jsx-dev-runtime.development.js:326
+_c @ C:\Users\ykoha\OneDrive\ドキュメント\デスクトップ\ケーズ・クラシック\01.cクライアント\Venus Ark\レポートプロジェクト\venus-ark-dashboard\components\ui\button.tsx:46
+react-stack-bottom-frame @ react-dom-client.development.js:23950
+renderWithHooksAgain @ react-dom-client.development.js:5179
+renderWithHooks @ react-dom-client.development.js:5091
+updateForwardRef @ react-dom-client.development.js:8072
+beginWork @ react-dom-client.development.js:10284
+runWithFiberInDEV @ react-dom-client.development.js:1511
+performUnitOfWork @ react-dom-client.development.js:15120
+workLoopSync @ react-dom-client.development.js:14944
+renderRootSync @ react-dom-client.development.js:14924
+performWorkOnRoot @ react-dom-client.development.js:14411
+performSyncWorkOnRoot @ react-dom-client.development.js:16290
+flushSyncWorkAcrossRoots_impl @ react-dom-client.development.js:16138
+processRootScheduleInMicrotask @ react-dom-client.development.js:16175
+eval @ react-dom-client.development.js:16309
+<Button>
+exports.jsxDEV @ react-jsx-dev-runtime.development.js:326
+DetailItemModal @ C:\Users\ykoha\OneDrive\ドキュメント\デスクトップ\ケーズ・クラシック\01.cクライアント\Venus Ark\レポートプロジェクト\venus-ark-dashboard\components\detail-item-modal.tsx:124
+react-stack-bottom-frame @ react-dom-client.development.js:23950
+renderWithHooksAgain @ react-dom-client.development.js:5179
+renderWithHooks @ react-dom-client.development.js:5091
+updateFunctionComponent @ react-dom-client.development.js:8328
+beginWork @ react-dom-client.development.js:9945
+runWithFiberInDEV @ react-dom-client.development.js:1511
+performUnitOfWork @ react-dom-client.development.js:15120
+workLoopSync @ react-dom-client.development.js:14944
+renderRootSync @ react-dom-client.development.js:14924
+performWorkOnRoot @ react-dom-client.development.js:14411
+performSyncWorkOnRoot @ react-dom-client.development.js:16290
+flushSyncWorkAcrossRoots_impl @ react-dom-client.development.js:16138
+processRootScheduleInMicrotask @ react-dom-client.development.js:16175
+eval @ react-dom-client.development.js:16309このエラーを分析
+C:\Users\ykoha\OneDrive\ドキュメント\デスクトップ\ケーズ・クラシック\01.cクライアント\Venus Ark\レポートプロジェクト\venus-ark-dashboard\components\recruitment-dashboard.tsx:139 Failed to save detail item: FirebaseError: Function addDoc() called with invalid data. Unsupported field value: undefined (found in field sourceData.rowLabel in document recruitment_detail_items/SAlHjPON2qC49l1SYAgp)
+error @ intercept-console-error.js:50
+handleDetailItemSave @ C:\Users\ykoha\OneDrive\ドキュメント\デスクトップ\ケーズ・クラシック\01.cクライアント\Venus Ark\レポートプロジェクト\venus-ark-dashboard\components\recruitment-dashboard.tsx:139
+await in handleDetailItemSave
+handleSave @ C:\Users\ykoha\OneDrive\ドキュメント\デスクトップ\ケーズ・クラシック\01.cクライアント\Venus Ark\レポートプロジェクト\venus-ark-dashboard\components\detail-item-modal.tsx:63
+executeDispatch @ react-dom-client.development.js:16427
+runWithFiberInDEV @ react-dom-client.development.js:1511
+processDispatchQueue @ react-dom-client.development.js:16477
+eval @ react-dom-client.development.js:17075
+batchedUpdates$1 @ react-dom-client.development.js:3254
+dispatchEventForPluginEventSystem @ react-dom-client.development.js:16631
+dispatchEvent @ react-dom-client.development.js:20717
+dispatchDiscreteEvent @ react-dom-client.development.js:20685
+<button>
+exports.jsxDEV @ react-jsx-dev-runtime.development.js:326
+_c @ C:\Users\ykoha\OneDrive\ドキュメント\デスクトップ\ケーズ・クラシック\01.cクライアント\Venus Ark\レポートプロジェクト\venus-ark-dashboard\components\ui\button.tsx:46
+react-stack-bottom-frame @ react-dom-client.development.js:23950
+renderWithHooksAgain @ react-dom-client.development.js:5179
+renderWithHooks @ react-dom-client.development.js:5091
+updateForwardRef @ react-dom-client.development.js:8072
+beginWork @ react-dom-client.development.js:10284
+runWithFiberInDEV @ react-dom-client.development.js:1511
+performUnitOfWork @ react-dom-client.development.js:15120
+workLoopSync @ react-dom-client.development.js:14944
+renderRootSync @ react-dom-client.development.js:14924
+performWorkOnRoot @ react-dom-client.development.js:14411
+performSyncWorkOnRoot @ react-dom-client.development.js:16290
+flushSyncWorkAcrossRoots_impl @ react-dom-client.development.js:16138
+processRootScheduleInMicrotask @ react-dom-client.development.js:16175
+eval @ react-dom-client.development.js:16309
+<Button>
+exports.jsxDEV @ react-jsx-dev-runtime.development.js:326
+DetailItemModal @ C:\Users\ykoha\OneDrive\ドキュメント\デスクトップ\ケーズ・クラシック\01.cクライアント\Venus Ark\レポートプロジェクト\venus-ark-dashboard\components\detail-item-modal.tsx:124
+react-stack-bottom-frame @ react-dom-client.development.js:23950
+renderWithHooksAgain @ react-dom-client.development.js:5179
+renderWithHooks @ react-dom-client.development.js:5091
+updateFunctionComponent @ react-dom-client.development.js:8328
+beginWork @ react-dom-client.development.js:9945
+runWithFiberInDEV @ react-dom-client.development.js:1511
+performUnitOfWork @ react-dom-client.development.js:15120
+workLoopSync @ react-dom-client.development.js:14944
+renderRootSync @ react-dom-client.development.js:14924
+performWorkOnRoot @ react-dom-client.development.js:14411
+performSyncWorkOnRoot @ react-dom-client.development.js:16290
+flushSyncWorkAcrossRoots_impl @ react-dom-client.development.js:16138
+processRootScheduleInMicrotask @ react-dom-client.development.js:16175
+eval @ react-dom-client.development.js:16309このエラーを分析
+C:\Users\ykoha\OneDrive\ドキュメント\デスクトップ\ケーズ・クラシック\01.cクライアント\Venus Ark\レポートプロジェクト\venus-ark-dashboard\components\detail-item-modal.tsx:33 [Modal] Rendering. isOpen: false sourceData: undefined initialData: undefined
+C:\Users\ykoha\OneDrive\ドキュメント\デスクトップ\ケーズ・クラシック\01.cクライアント\Venus Ark\レポートプロジェクト\venus-ark-dashboard\components\detail-item-modal.tsx:33 [Modal] Rendering. isOpen: false sourceData: undefined initialData: undefined
+C:\Users\ykoha\OneDrive\ドキュメント\デスクトップ\ケーズ・クラシック\01.cクライアント\Venus Ark\レポートプロジェクト\venus-ark-dashboard\components\detail-item-modal.tsx:36 [Modal] useEffect triggered. isOpen: false
+2hot-reloader-client.js:242 [Fast Refresh] rebuilding
+hot-reloader-client.js:74 [Fast Refresh] done in 156ms
+C:\Users\ykoha\OneDrive\ドキュメント\デスクトップ\ケーズ・クラシック\01.cクライアント\Venus Ark\レポートプロジェクト\venus-ark-dashboard\app\page.tsx:38 [DEBUG: app/page.tsx] Current selection: Year=2025, Month=7, Week=3
+C:\Users\ykoha\OneDrive\ドキュメント\デスクトップ\ケーズ・クラシック\01.cクライアント\Venus Ark\レポートプロジェクト\venus-ark-dashboard\app\page.tsx:38 [DEBUG: app/page.tsx] Current selection: Year=2025, Month=7, Week=3
+C:\Users\ykoha\OneDrive\ドキュメント\デスクトップ\ケーズ・クラシック\01.cクライアント\Venus Ark\レポートプロジェクト\venus-ark-dashboard\components\detail-item-modal.tsx:33 [Modal] Rendering. isOpen: false sourceData: undefined initialData: undefined
+C:\Users\ykoha\OneDrive\ドキュメント\デスクトップ\ケーズ・クラシック\01.cクライアント\Venus Ark\レポートプロジェクト\venus-ark-dashboard\components\detail-item-modal.tsx:33 [Modal] Rendering. isOpen: false sourceData: undefined initialData: undefined
+C:\Users\ykoha\OneDrive\ドキュメント\デスクトップ\ケーズ・クラシック\01.cクライアント\Venus Ark\レポートプロジェクト\venus-ark-dashboard\app\page.tsx:38 [DEBUG: app/page.tsx] Current selection: Year=2025, Month=7, Week=3
+C:\Users\ykoha\OneDrive\ドキュメント\デスクトップ\ケーズ・クラシック\01.cクライアント\Venus Ark\レポートプロジェクト\venus-ark-dashboard\app\page.tsx:38 [DEBUG: app/page.tsx] Current selection: Year=2025, Month=7, Week=3
+hot-reloader-client.js:74 [Fast Refresh] done in 360ms
+C:\Users\ykoha\OneDrive\ドキュメント\デスクトップ\ケーズ・クラシック\01.cクライアント\Venus Ark\レポートプロジェクト\venus-ark-dashboard\components\detail-item-modal.tsx:33 [Modal] Rendering. isOpen: false sourceData: undefined initialData: undefined
+C:\Users\ykoha\OneDrive\ドキュメント\デスクトップ\ケーズ・クラシック\01.cクライアント\Venus Ark\レポートプロジェクト\venus-ark-dashboard\components\detail-item-modal.tsx:33 [Modal] Rendering. isOpen: false sourceData: undefined initialData: undefinedW

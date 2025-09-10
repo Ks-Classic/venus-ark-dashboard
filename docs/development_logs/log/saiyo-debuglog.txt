@@ -1,0 +1,172 @@
+[Debug] Weeks to fetch: (4) ['2025-07-W03', '2025-07-W02', '2025-07-W01', '2025-06-W04']
+VM6751 use-weekly-reports.ts:42 [Debug] Fetching URL: /api/recruitment/weekly-reports?year=2025&month=7&weekInMonth=3
+VM6751 use-weekly-reports.ts:42 [Debug] Fetching URL: /api/recruitment/weekly-reports?year=2025&month=7&weekInMonth=2
+VM6751 use-weekly-reports.ts:42 [Debug] Fetching URL: /api/recruitment/weekly-reports?year=2025&month=7&weekInMonth=1
+VM6751 use-weekly-reports.ts:42 [Debug] Fetching URL: /api/recruitment/weekly-reports?year=2025&month=6&weekInMonth=4
+VM6751 use-weekly-reports.ts:53 [Debug] Fetched reports count: 4
+VM6751 use-weekly-reports.ts:54 [Debug] Raw fetched data: [
+  {
+    "id": "empty-2025-7-3",
+    "reportType": "recruitment",
+    "year": 2025,
+    "month": 7,
+    "weekInMonth": 3,
+    "startDate": "2025-07-12",
+    "endDate": "2025-07-18",
+    "jobCategory": "all",
+    "recruitmentMetrics": {
+      "totalApplications": 0,
+      "documentSubmissions": 0,
+      "interviews": 0,
+      "hires": 0,
+      "rejections": 0,
+      "rejectionReasons": {},
+      "sourceBreakdown": {}
+    },
+    "updatedAt": "2025-07-16T01:20:39.558Z"
+  },
+  {
+    "id": "empty-2025-7-2",
+    "reportType": "recruitment",
+    "year": 2025,
+    "month": 7,
+    "weekInMonth": 2,
+    "startDate": "2025-07-05",
+    "endDate": "2025-07-11",
+    "jobCategory": "all",
+    "recruitmentMetrics": {
+      "totalApplications": 0,
+      "documentSubmissions": 0,
+      "interviews": 0,
+      "hires": 0,
+      "rejections": 0,
+      "rejectionReasons": {},
+      "sourceBreakdown": {}
+    },
+    "updatedAt": "2025-07-16T01:20:39.534Z"
+  },
+  {
+    "id": "empty-2025-7-1",
+    "reportType": "recruitment",
+    "year": 2025,
+    "month": 7,
+    "weekInMonth": 1,
+    "startDate": "2025-06-28",
+    "endDate": "2025-07-04",
+    "jobCategory": "all",
+    "recruitmentMetrics": {
+      "totalApplications": 0,
+      "documentSubmissions": 0,
+      "interviews": 0,
+      "hires": 0,
+      "rejections": 0,
+      "rejectionReasons": {},
+      "sourceBreakdown": {}
+    },
+    "updatedAt": "2025-07-16T01:20:39.524Z"
+  },
+  {
+    "id": "empty-2025-6-4",
+    "reportType": "recruitment",
+    "year": 2025,
+    "month": 6,
+    "weekInMonth": 4,
+    "startDate": "2025-06-21",
+    "endDate": "2025-06-27",
+    "jobCategory": "all",
+    "recruitmentMetrics": {
+      "totalApplications": 0,
+      "documentSubmissions": 0,
+      "interviews": 0,
+      "hires": 0,
+      "rejections": 0,
+      "rejectionReasons": {},
+      "sourceBreakdown": {}
+    },
+    "updatedAt": "2025-07-16T01:20:39.560Z"
+  }
+]
+VM6751 use-weekly-reports.ts:64 [Debug] Processed data: (4) [{…}, {…}, {…}, {…}]
+VM6751 use-weekly-reports.ts:53 [Debug] Fetched reports count: 4
+VM6751 use-weekly-reports.ts:54 [Debug] Raw fetched data: [
+  {
+    "id": "empty-2025-7-3",
+    "reportType": "recruitment",
+    "year": 2025,
+    "month": 7,
+    "weekInMonth": 3,
+    "startDate": "2025-07-12",
+    "endDate": "2025-07-18",
+    "jobCategory": "all",
+    "recruitmentMetrics": {
+      "totalApplications": 0,
+      "documentSubmissions": 0,
+      "interviews": 0,
+      "hires": 0,
+      "rejections": 0,
+      "rejectionReasons": {},
+      "sourceBreakdown": {}
+    },
+    "updatedAt": "2025-07-16T01:20:39.664Z"
+  },
+  {
+    "id": "empty-2025-7-2",
+    "reportType": "recruitment",
+    "year": 2025,
+    "month": 7,
+    "weekInMonth": 2,
+    "startDate": "2025-07-05",
+    "endDate": "2025-07-11",
+    "jobCategory": "all",
+    "recruitmentMetrics": {
+      "totalApplications": 0,
+      "documentSubmissions": 0,
+      "interviews": 0,
+      "hires": 0,
+      "rejections": 0,
+      "rejectionReasons": {},
+      "sourceBreakdown": {}
+    },
+    "updatedAt": "2025-07-16T01:20:39.668Z"
+  },
+  {
+    "id": "empty-2025-7-1",
+    "reportType": "recruitment",
+    "year": 2025,
+    "month": 7,
+    "weekInMonth": 1,
+    "startDate": "2025-06-28",
+    "endDate": "2025-07-04",
+    "jobCategory": "all",
+    "recruitmentMetrics": {
+      "totalApplications": 0,
+      "documentSubmissions": 0,
+      "interviews": 0,
+      "hires": 0,
+      "rejections": 0,
+      "rejectionReasons": {},
+      "sourceBreakdown": {}
+    },
+    "updatedAt": "2025-07-16T01:20:39.667Z"
+  },
+  {
+    "id": "empty-2025-6-4",
+    "reportType": "recruitment",
+    "year": 2025,
+    "month": 6,
+    "weekInMonth": 4,
+    "startDate": "2025-06-21",
+    "endDate": "2025-06-27",
+    "jobCategory": "all",
+    "recruitmentMetrics": {
+      "totalApplications": 0,
+      "documentSubmissions": 0,
+      "interviews": 0,
+      "hires": 0,
+      "rejections": 0,
+      "rejectionReasons": {},
+      "sourceBreakdown": {}
+    },
+    "updatedAt": "2025-07-16T01:20:39.702Z"
+  }
+]

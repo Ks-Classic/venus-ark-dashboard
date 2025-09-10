@@ -1,0 +1,5 @@
+[33mb5def02[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mfix/notion-sync-staffmetrics-supabase[m[33m)[m fix(work-status): implement supabase upsertStaffMetrics and switch import; guard Notion env in sync route
+[33m8f976d2[m fix(firestore): strip undefined recursively before upserting weekly_reports to avoid undefined field error
+[33m3c2f965[m chore(debug): added robust weekly aggregation and API query fix; ready for verification
+[33m11d79a4[m feat: 採用ダッシュボードのデータ基盤をv2に移行
+[33m312d20f[m 🔧 Task 1.1-1.2完了: 構文エラー修正とデバッグログクリーンアップ - recruitment-dashboard.tsxの構文エラーを修正 - 期間選択UIが正常に表示されるように修正 - デバッグ用console.logを削除してクリーンアップ - 基本的な期間選択機能が動作確認済み

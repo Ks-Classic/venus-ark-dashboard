@@ -1,0 +1,148 @@
+# Venus Ark ダッシュボード - Google Sheets 列名マッピング設定
+# Google Sheetsの列名が変更された場合、このファイルを更新するだけで対応可能
+
+# 採用管理シート（職種別）の列名マッピング
+recruitment_sheets:
+  # 共通列名（全職種で使用）
+  common_columns:
+    applicant_name: "名前"
+    email: "メールアドレス"
+    application_date: "応募日"
+    status: "現状ステータス"
+    phone: "電話番号"
+    document_submit_date: "書類提出日"
+    interview_date: "面談予定日時"
+    interview_implemented_date: "面談実施日"
+    hire_date: "採用日"
+    acceptance_date: "内定受諾日"
+    start_work_date: "実稼働開始日"
+    rejection_reason: "理由"
+    rejection_detail: "不採用詳細理由"
+    form_submission_timestamp: "応募フォームのタイムスタンプ"
+    
+  # 職種別シート名パターン
+  sheet_name_patterns:
+    sns_operation: 
+      - "SNS運用採用"
+      - "indeed応募者管理(SNS運用)"
+      - "engageその他応募者管理(SNS運用)"
+    video_creator:
+      - "動画クリエイター採用"
+      - "indeed応募者管理(動画編集)"
+      - "engageその他応募者管理(動画編集)"
+    ai_writer:
+      - "AIライター採用"
+      - "indeed応募者管理(ライター/AIライター)"
+      - "engageその他応募者管理(ライター/AIライター)"
+    photography_staff:
+      - "撮影スタッフ採用"
+      - "indeed応募者管理(撮影スタッフ)"
+      - "engageその他応募者管理(撮影スタッフ)"
+
+  # Indeed分析データ用列名
+  indeed_columns:
+    impressions: "表示回数"
+    clicks: "クリック数"
+    cost: "広告費"
+    
+  # 媒体別追加列名
+  media_specific_columns:
+    indeed:
+      source_identifier: "Indeed"
+      campaign_id: "キャンペーンID"
+    engage:
+      source_identifier: "エンゲージ"
+      referral_code: "紹介コード"
+
+# 求人エントリーフォーム（応募フォーム）の列名マッピング
+entry_form_sheets:
+  # 基本フォーム列名
+  basic_columns:
+    timestamp: "タイムスタンプ"
+    applicant_name: "お名前"
+    email: "メールアドレス"
+    phone: "電話番号"
+    job_category: "希望職種"
+    nearest_station: "最寄り駅"
+    desired_shift: "希望シフト"
+    experience: "経験・スキル"
+    motivation: "志望動機"
+    availability: "稼働可能時期"
+    
+  # 職種別専用フォーム列名
+  job_specific_columns:
+    sns_operation:
+      sns_experience: "SNS運用経験"
+      platform_knowledge: "使用可能プラットフォーム"
+    video_creator:
+      editing_software: "使用可能編集ソフト"
+      portfolio_url: "ポートフォリオURL"
+    ai_writer:
+      writing_experience: "ライティング経験"
+      ai_tools_experience: "AI ツール使用経験"
+    photography_staff:
+      camera_equipment: "所有機材"
+      shooting_experience: "撮影経験"
+
+# 列名の代替パターン（表記揺れ対応）
+column_aliases:
+  applicant_name:
+    - "氏名"
+    - "お名前"
+    - "応募者名"
+    - "名前"
+  email:
+    - "メールアドレス"
+    - "Email"
+    - "メール"
+    - "連絡先メール"
+  application_date:
+    - "応募日"
+    - "応募日時"
+    - "申込日"
+  status:
+    - "現状ステータス"
+    - "ステータス"
+    - "選考状況"
+    - "進捗状況"
+  interview_date:
+    - "面談予定日時"
+    - "面接日"
+    - "面談日"
+    - "面接予定日"
+
+# バリデーション設定
+validation:
+  required_columns:
+    - "applicant_name"
+    - "email"
+    - "application_date"
+    - "status"
+  
+  date_columns:
+    - "application_date"
+    - "document_submit_date"
+    - "interview_date"
+    - "interview_implemented_date"
+    - "hire_date"
+    - "acceptance_date"
+    - "start_work_date"
+    
+  email_columns:
+    - "email"
+    
+  status_values:
+    valid_statuses:
+      - "応募"
+      - "書類提出"
+      - "面接"
+      - "面談確定"
+      - "面接実施"
+      - "採用"
+      - "不採用"
+      - "辞退"
+      - "書類落ち"
+      - "応募落ち"
+      - "面談不参加"
+      - "離脱"
+      - "内定受諾" 

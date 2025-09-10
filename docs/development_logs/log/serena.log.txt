@@ -1,0 +1,66 @@
+C:\Users\ykoha\dev\serena>   uv sync
+Resolved 110 packages in 1ms
+  x Failed to build `tiktoken==0.9.0`
+  |-> The build backend returned an error
+  `-> Call to `setuptools.build_meta.build_wheel` failed (exit code: 1)
+
+      [stdout]
+      running bdist_wheel
+      running build
+      running build_py
+      copying tiktoken\core.py -> build\lib.win32-cpython-311\tiktoken
+      copying tiktoken\load.py -> build\lib.win32-cpython-311\tiktoken
+      copying tiktoken\model.py -> build\lib.win32-cpython-311\tiktoken
+      copying tiktoken\registry.py -> build\lib.win32-cpython-311\tiktoken
+      copying tiktoken\_educational.py -> build\lib.win32-cpython-311\tiktoken
+      copying tiktoken\__init__.py -> build\lib.win32-cpython-311\tiktoken
+      copying tiktoken_ext\openai_public.py -> build\lib.win32-cpython-311\tiktoken_ext
+      running egg_info
+      writing tiktoken.egg-info\PKG-INFO
+      writing dependency_links to tiktoken.egg-info\dependency_links.txt
+      writing requirements to tiktoken.egg-info\requires.txt
+      writing top-level names to tiktoken.egg-info\top_level.txt
+      reading manifest file 'tiktoken.egg-info\SOURCES.txt'
+      reading manifest template 'MANIFEST.in'
+      adding license file 'LICENSE'
+      writing manifest file 'tiktoken.egg-info\SOURCES.txt'
+      copying tiktoken\py.typed -> build\lib.win32-cpython-311\tiktoken
+      running build_ext
+      running build_rust
+
+      [stderr]
+      C:\Users\ykoha\AppData\Local\uv\cache\builds-v0\.tmpDfbDZ7\Lib\site-packages\setuptools\config\_apply_pyprojecttoml.py:82:
+      SetuptoolsDeprecationWarning: `project.license` as a TOML table is deprecated
+      !!
+
+              ********************************************************************************
+              Please use a simple string containing a SPDX expression for `project.license`. You can also use
+      `project.license-files`. (Both options available on setuptools>=77.0.0).
+
+              By 2026-Feb-18, you need to update your project and remove deprecated calls
+              or your builds will no longer be supported.
+
+              See https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#license for details.
+              ********************************************************************************
+
+      !!
+        corresp(dist, value, root_dir)
+      warning: no files found matching 'Makefile'
+      cargo rustc --lib --message-format=json-render-diagnostics --manifest-path Cargo.toml --target
+      x86_64-pc-windows-msvc --release -v --features python pyo3/extension-module --crate-type cdylib --
+      error: failed to run `rustc` to learn about target-specific information
+
+      Caused by:
+        process didn't exit successfully: `C:\Users\ykoha\.rustup\toolchains\stable-x86_64-pc-windows-msvc\bin\rustc.exe
+      - --crate-name ___ --print=file-names --target x86_64-pc-windows-msvc --target x86_64-pc-windows-msvc
+      --crate-type bin --crate-type rlib --crate-type dylib --crate-type cdylib --crate-type staticlib --crate-type
+      proc-macro --print=sysroot --print=split-debuginfo --print=crate-name --print=cfg -Wwarnings` (exit code: 1)
+        --- stderr
+        error: Option 'target' given more than once
+
+      error: `cargo rustc --lib --message-format=json-render-diagnostics --manifest-path Cargo.toml --target
+      x86_64-pc-windows-msvc --release -v --features 'python pyo3/extension-module' --crate-type cdylib --` failed
+      with code 101
+
+      hint: This usually indicates a problem with the package or the build environment.
+  help: `tiktoken` (v0.9.0) was included because `serena-agent` (v0.1.3) depends on `tiktoken`

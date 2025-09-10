@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <base target="_top">
+    <style>
+      body { font-family: system-ui, -apple-system, Segoe UI, Roboto, 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', sans-serif; padding: 16px; }
+      h1 { font-size: 18px; margin: 0 0 12px; }
+      .row { display: flex; gap: 8px; align-items: center; margin-bottom: 12px; }
+      select, button { font-size: 14px; padding: 6px 8px; }
+      table { width: 100%; border-collapse: collapse; margin-top: 12px; }
+      th, td { border: 1px solid #ddd; padding: 6px 8px; font-size: 12px; }
+      th { background: #f7f7f7; text-align: left; }
+      .total { background: #fafafa; font-weight: 600; }
+      .muted { color: #666; font-size: 12px; }
+      .footer { margin-top: 8px; }
+    </style>
+  </head>
+  <body>
+    <h1>詳細集計レポート</h1>
+    <div class="row">
+      <label>週を選択: </label>
+      <select id="weekSelector"></select>
+      <button onclick="run()">集計</button>
+    </div>
+    <div class="muted">対象期間: <span id="dateRange">(未実行)</span></div>
+    <table id="resultTable" style="display:none;">
+      <thead>
+        <tr>
+          <th>シート名</th>
+          <th>応募数</th>
+          <th>応募内不採用</th>
+          <th>選考継続(応募)</th>
+          <th>書類提出数</th>
+          <th>書類内不採用数</th>
+          <th>選考継続(書類)</th>
+          <th>面接予定</th>
+          <th>面接実施</th>
+          <th>面接辞退</th>
+          <th>採用者</th>
+          <th>内定受諾</th>
+          <th>経験者</th>
+          <th>高齢</th>
+          <th>不適合</th>
+          <th>外国籍</th>
+          <th>採用辞退</th>
+          <th>その他</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+      <tfoot>
+        <tr class="total">
+          <td>合計</td>
+          <td id="t-applyCount">0</td>
+          <td id="t-applyRejectCount">0</td>
+          <td id="t-applyContinueCount">0</td>
+          <td id="t-doc-submitted">0</td>
+          <td id="t-doc-reject">0</td>
+          <td id="t-doc-continue">0</td>
+          <td id="t-interviewScheduled">0</td>
+          <td id="t-interviewConducted">0</td>
+          <td id="t-interviewCancelled">0</td>
+          <td id="t-hireCount">0</td>
+          <td id="t-offerAcceptedCount">0</td>
+          <td id="t-r-exp">0</td>
+          <td id="t-r-age">0</td>
+          <td id="t-r-unfit">0</td>
+          <td id="t-r-foreign">0</td>
+          <td id="t-r-declined">0</td>
+          <td id="t-r-other">0</td>
+        </tr>
+      </tfoot>
+    </table>
+    <div class="footer muted">定義: 応募=応募日基準 / 書類提出=応募フォームのタイムスタンプ / 書類内不採用=フォームのタイムスタンプが週内かつ書類落ち / 面接予定=G / 面接実施=H / 採用=Hかつ採用 / 受諾=I</div>
+
+    <script type="application/json" id="weeks-data"><?!= JSON.stringify(weeks) ?></script>
+    <script>
+      const weeks = JSON.parse(document.getElementById('weeks-data').textContent);
+      const select = document.getElementById('weekSelector');
+      weeks.forEach(w => {
+        const opt = document.createElement('option');
+        opt.value = w; opt.textContent = w; select.appendChild(opt);
+      });
+
+      function setTotals(t) {
+        document.getElementById('t-applyCount').textContent = t.applyCount;
+        document.getElementById('t-applyRejectCount').textContent = t.applyRejectCount;
+        document.getElementById('t-applyContinueCount').textContent = t.applyContinueCount;
+        document.getElementById('t-doc-submitted').textContent = (t.documentSubmitted !== undefined ? t.documentSubmitted : 0);
+        document.getElementById('t-doc-reject').textContent = (t.documentRejectCount !== undefined ? t.documentRejectCount : 0);
+        document.getElementById('t-doc-continue').textContent = (t.documentContinueCount !== undefined ? t.documentContinueCount : 0);
+        document.getElementById('t-interviewScheduled').textContent = t.interviewScheduled;
+        document.getElementById('t-interviewConducted').textContent = t.interviewConducted;
+        document.getElementById('t-interviewCancelled').textContent = t.interviewCancelled;
+        document.getElementById('t-hireCount').textContent = t.hireCount;
+        document.getElementById('t-offerAcceptedCount').textContent = t.offerAcceptedCount;
+        if (t.rejection) {
+          document.getElementById('t-r-exp').textContent = t.rejection.experienced;
+          document.getElementById('t-r-age').textContent = t.rejection.elderly;
+          document.getElementById('t-r-unfit').textContent = t.rejection.unsuitable;
+          document.getElementById('t-r-foreign').textContent = t.rejection.foreign;
+          document.getElementById('t-r-declined').textContent = t.rejection.declined;
+          document.getElementById('t-r-other').textContent = t.rejection.other;
+        }
+      }
+
+      function render(result) {
+        document.getElementById('dateRange').textContent = result.dateRange;
+        const table = document.getElementById('resultTable');
+        const tbody = table.querySelector('tbody');
+        tbody.innerHTML = '';
+        if (result.debug && Array.isArray(result.debug.logs)) {
+          console.log('[DEBUG from GAS]', result.debug.logs.join('\n'));
+        }
+        // 先頭に採用集計のサマリ行を表示
+        const t = result.totals || {};
+        const summaryTr = document.createElement('tr');
+        summaryTr.innerHTML = `<td>採用集計</td>
+          <td>${t.applyCount ?? 0}</td>
+          <td>${t.applyRejectCount ?? 0}</td>
+          <td>${t.applyContinueCount ?? 0}</td>
+          <td>${t.documentSubmitted ?? 0}</td>
+          <td>${t.documentRejectCount ?? 0}</td>
+          <td>${t.documentContinueCount ?? 0}</td>
+          <td>${t.interviewScheduled ?? 0}</td>
+          <td>${t.interviewConducted ?? 0}</td>
+          <td>${t.interviewCancelled ?? 0}</td>
+          <td>${t.hireCount ?? 0}</td>
+          <td>${t.offerAcceptedCount ?? 0}</td>
+          <td>${t.rejection?.experienced ?? 0}</td>
+          <td>${t.rejection?.elderly ?? 0}</td>
+          <td>${t.rejection?.unsuitable ?? 0}</td>
+          <td>${t.rejection?.foreign ?? 0}</td>
+          <td>${t.rejection?.declined ?? 0}</td>
+          <td>${t.rejection?.other ?? 0}</td>`;
+        tbody.appendChild(summaryTr);
+        result.perSheet.forEach(r => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `<td>${r.sheet}</td>
+            <td>${r.applyCount}</td>
+            <td>${r.applyRejectCount}</td>
+            <td>${r.applyContinueCount}</td>
+            <td>${r.documentSubmitted ?? '-'}</td>
+            <td>${r.documentRejectCount ?? 0}</td>
+            <td>${r.documentContinueCount ?? '-'}</td>
+            <td>${r.interviewScheduled}</td>
+            <td>${r.interviewConducted}</td>
+            <td>${r.interviewCancelled}</td>
+            <td>${r.hireCount}</td>
+            <td>${r.offerAcceptedCount}</td>
+            <td>${r.rejection.experienced}</td>
+            <td>${r.rejection.elderly}</td>
+            <td>${r.rejection.unsuitable}</td>
+            <td>${r.rejection.foreign}</td>
+            <td>${r.rejection.declined}</td>
+            <td>${r.rejection.other}</td>`;
+          tbody.appendChild(tr);
+        });
+        setTotals(result.totals || {});
+        table.style.display = '';
+      }
+
+      function run() {
+        const week = select.value;
+        google.script.run.withSuccessHandler(render).getDetailedWeeklyReport(week);
+      }
+    </script>
+  </body>
+</html>

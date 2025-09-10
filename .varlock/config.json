@@ -1,0 +1,13 @@
+{
+  "version": "1.0.0",
+  "name": "venus-ark-dashboard",
+  "description": "採用ダッシュボード環境変数管理",
+  "envFiles": [
+    ".env.local",
+    ".env.schema"
+  ],
+  "validation": {
+    "strict": true,
+    "allowUnknown": false
+  }
+}

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>採用ダッシュボード API テスト</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .result {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            padding: 15px;
+            margin-top: 10px;
+            white-space: pre-wrap;
+            font-family: monospace;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .error {
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+            color: #721c24;
+        }
+        .success {
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+            color: #155724;
+        }
+        .input-group {
+            margin: 10px 0;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+    <h1>採用ダッシュボード API テスト</h1>
+    
+    <div class="container">
+        <h2>週次レポート取得テスト</h2>
+        
+        <div class="input-group">
+            <label for="weekIds">週ID (カンマ区切り):</label>
+            <input type="text" id="weekIds" value="2025-W25,2025-W26,2025-W27,2025-W28" placeholder="例: 2025-W25,2025-W26">
+        </div>
+        
+        <div class="input-group">
+            <label for="jobCategory">職種:</label>
+            <select id="jobCategory">
+                <option value="">全て</option>
+                <option value="AIライター">AIライター</option>
+                <option value="SNS運用">SNS運用</option>
+                <option value="動画クリエイター">動画クリエイター</option>
+                <option value="撮影スタッフ">撮影スタッフ</option>
+            </select>
+        </div>
+        
+        <button onclick="testWeeklyReports()">週次レポート取得</button>
+        <button onclick="testFirestoreData()">Firestoreデータ直接確認</button>
+        
+        <div id="result" class="result"></div>
+    </div>
+
+    <script>
+        async function testWeeklyReports() {
+            const resultDiv = document.getElementById('result');
+            const weekIds = document.getElementById('weekIds').value;
+            const jobCategory = document.getElementById('jobCategory').value;
+            
+            resultDiv.textContent = 'テスト実行中...';
+            resultDiv.className = 'result';
+            
+            try {
+                const params = new URLSearchParams({
+                    reportType: 'recruitment'
+                });
+                
+                // 週IDを追加
+                weekIds.split(',').forEach(weekId => {
+                    params.append('weekIds', weekId.trim());
+                });
+                
+                // 職種を追加
+                if (jobCategory) {
+                    params.append('jobCategory', jobCategory);
+                }
+                
+                const url = `/api/recruitment/weekly-reports?${params.toString()}`;
+                console.log('リクエストURL:', url);
+                
+                const response = await fetch(url);
+                const data = await response.json();
+                
+                if (response.ok) {
+                    resultDiv.className = 'result success';
+                    resultDiv.textContent = `✅ 成功 (${response.status})\n\n` + 
+                        `取得件数: ${data.length}件\n\n` +
+                        JSON.stringify(data, null, 2);
+                } else {
+                    resultDiv.className = 'result error';
+                    resultDiv.textContent = `❌ エラー (${response.status})\n\n` + 
+                        JSON.stringify(data, null, 2);
+                }
+            } catch (error) {
+                resultDiv.className = 'result error';
+                resultDiv.textContent = `❌ ネットワークエラー\n\n${error.message}`;
+            }
+        }
+        
+        async function testFirestoreData() {
+            const resultDiv = document.getElementById('result');
+            
+            resultDiv.textContent = 'Firestoreデータ確認中...';
+            resultDiv.className = 'result';
+            
+            try {
+                const response = await fetch('/api/recruitment/weekly-reports?reportType=recruitment');
+                const data = await response.json();
+                
+                if (response.ok) {
+                    resultDiv.className = 'result success';
+                    resultDiv.textContent = `✅ Firestoreデータ確認完了\n\n` + 
+                        `総件数: ${data.length}件\n\n` +
+                        `利用可能な週ID:\n` +
+                        data.map(item => `- ${item.id || item.weekStart}: ${item.recruitmentMetrics?.applications || 0}件の応募`).join('\n') +
+                        '\n\n詳細データ:\n' +
+                        JSON.stringify(data, null, 2);
+                } else {
+                    resultDiv.className = 'result error';
+                    resultDiv.textContent = `❌ エラー (${response.status})\n\n` + 
+                        JSON.stringify(data, null, 2);
+                }
+            } catch (error) {
+                resultDiv.className = 'result error';
+                resultDiv.textContent = `❌ ネットワークエラー\n\n${error.message}`;
+            }
+        }
+        
+        // ページ読み込み時に自動実行
+        window.onload = function() {
+            testFirestoreData();
+        };
+    </script>
+</body>
+</html> 

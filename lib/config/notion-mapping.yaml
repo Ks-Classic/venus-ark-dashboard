@@ -1,0 +1,294 @@
+# Venus Ark ダッシュボード - Notion プロパティ ID マッピング設定
+# Notionのプロパティ名やIDが変更された場合、このファイルを更新するだけで対応可能
+
+# メンバーDB のプロパティマッピング
+member_database:
+  database_id: "メンバーDBのデータベースID" # 実際のIDは環境変数で管理
+  
+  # プロパティ名とプロパティID のマッピング
+  properties:
+    # 基本情報
+    name:
+      property_name: "名前"
+      property_id: "title"
+      type: "title"
+    status:
+      property_name: "ステータス"
+      property_id: "status_property_id"
+      type: "select"
+    email:
+      property_name: "メールアドレス"
+      property_id: "email_property_id"
+      type: "email"
+    phone:
+      property_name: "電話番号"
+      property_id: "phone_property_id"
+      type: "phone_number"
+    
+    # 採用関連
+    application_date:
+      property_name: "応募日"
+      property_id: "application_date_property_id"
+      type: "date"
+    hire_date:
+      property_name: "採用日"
+      property_id: "hire_date_property_id"
+      type: "date"
+    first_counseling_date:
+      property_name: "初回実施日"
+      property_id: "first_counseling_property_id"
+      type: "date"
+    
+    # 個人属性
+    nearest_station:
+      property_name: "最寄り駅"
+      property_id: "nearest_station_property_id"
+      type: "rich_text"
+    desired_shift:
+      property_name: "希望シフト"
+      property_id: "desired_shift_property_id"
+      type: "rich_text"
+    skills:
+      property_name: "スキル"
+      property_id: "skills_property_id"
+      type: "multi_select"
+    learning_programs:
+      property_name: "学習プログラム"
+      property_id: "learning_programs_property_id"
+      type: "multi_select"
+    
+    # 稼働状態
+    current_project:
+      property_name: "現在の案件"
+      property_id: "current_project_property_id"
+      type: "relation"
+    first_work_start_date:
+      property_name: "初回稼働開始日"
+      property_id: "first_work_start_property_id"
+      type: "date"
+    last_work_start_date:
+      property_name: "最新業務開始日"
+      property_id: "last_work_start_property_id"
+      type: "date"
+    last_work_end_date:
+      property_name: "最新業務終了日 "
+      property_id: "last_work_end_property_id"
+      type: "date"
+    contract_start_date:
+      property_name: "業務委託契約締結日"
+      property_id: "contract_start_property_id"
+      type: "date"
+    contract_end_date:
+      property_name: "業務委託契約終了日"
+      property_id: "contract_end_property_id"
+      type: "date"
+    
+    # メタデータ
+    created_time:
+      property_name: "作成日時"
+      property_id: "created_time"
+      type: "created_time"
+    last_edited_time:
+      property_name: "最終更新日時"
+      property_id: "last_edited_time"
+      type: "last_edited_time"
+
+# 案件DB のプロパティマッピング
+project_database:
+  database_id: "案件DBのデータベースID" # 実際のIDは環境変数で管理
+  
+  properties:
+    # 基本情報
+    name:
+      property_name: "案件名"
+      property_id: "title"
+      type: "title"
+    status:
+      property_name: "ステータス"
+      property_id: "project_status_property_id"
+      type: "select"
+    
+    # クライアント情報
+    client_name:
+      property_name: "クライアント名"
+      property_id: "client_name_property_id"
+      type: "rich_text"
+    client_contact:
+      property_name: "クライアント連絡先"
+      property_id: "client_contact_property_id"
+      type: "rich_text"
+    
+    # 案件詳細
+    description:
+      property_name: "案件詳細"
+      property_id: "description_property_id"
+      type: "rich_text"
+    work_style:
+      property_name: "稼働形態"
+      property_id: "work_style_property_id"
+      type: "select"
+    work_location:
+      property_name: "稼働場所"
+      property_id: "work_location_property_id"
+      type: "rich_text"
+    hourly_rate:
+      property_name: "時給"
+      property_id: "hourly_rate_property_id"
+      type: "number"
+    monthly_hours:
+      property_name: "月間稼働時間"
+      property_id: "monthly_hours_property_id"
+      type: "number"
+    
+    # 募集要件
+    required_skills:
+      property_name: "必須スキル"
+      property_id: "required_skills_property_id"
+      type: "multi_select"
+    preferred_skills:
+      property_name: "優遇スキル"
+      property_id: "preferred_skills_property_id"
+      type: "multi_select"
+    job_category:
+      property_name: "職種カテゴリ"
+      property_id: "job_category_property_id"
+      type: "select"
+    experience_level:
+      property_name: "経験レベル"
+      property_id: "experience_level_property_id"
+      type: "select"
+    
+    # 期間情報
+    start_date:
+      property_name: "案件開始日"
+      property_id: "start_date_property_id"
+      type: "date"
+    end_date:
+      property_name: "案件終了日"
+      property_id: "end_date_property_id"
+      type: "date"
+    recruitment_deadline:
+      property_name: "募集締切"
+      property_id: "recruitment_deadline_property_id"
+      type: "date"
+
+# メンバー別案件管理DB のプロパティマッピング
+member_project_database:
+  database_id: "メンバー別案件管理DBのデータベースID" # 実際のIDは環境変数で管理
+  
+  properties:
+    # 関連情報
+    member:
+      property_name: "メンバー"
+      property_id: "member_relation_property_id"
+      type: "relation"
+    project:
+      property_name: "案件"
+      property_id: "project_relation_property_id"
+      type: "relation"
+    
+    # ステータス
+    status:
+      property_name: "ステータス"
+      property_id: "member_project_status_property_id"
+      type: "select"
+    
+    # 期間情報
+    start_date:
+      property_name: "開始日"
+      property_id: "mp_start_date_property_id"
+      type: "date"
+    end_date:
+      property_name: "終了日"
+      property_id: "mp_end_date_property_id"
+      type: "date"
+    
+    # 稼働情報
+    role:
+      property_name: "役割"
+      property_id: "role_property_id"
+      type: "rich_text"
+    hourly_rate:
+      property_name: "時給"
+      property_id: "mp_hourly_rate_property_id"
+      type: "number"
+    weekly_hours:
+      property_name: "週間稼働時間"
+      property_id: "weekly_hours_property_id"
+      type: "number"
+    
+    # 評価・メモ
+    performance_rating:
+      property_name: "評価"
+      property_id: "performance_rating_property_id"
+      type: "select"
+    notes:
+      property_name: "メモ"
+      property_id: "notes_property_id"
+      type: "rich_text"
+    
+    # 契約情報
+    contract_type:
+      property_name: "契約形態"
+      property_id: "contract_type_property_id"
+      type: "select"
+
+# プロパティ値の標準化マッピング
+property_value_mappings:
+  # メンバーステータスの値マッピング
+  member_status:
+    recruiting: "採用活動中"
+    training: "研修中"
+    working: "稼働中"
+    contract_ended: "契約終了"
+    on_hold: "保留中"
+    withdrawn: "辞退"
+    
+  # 案件ステータスの値マッピング
+  project_status:
+    planning: "企画中"
+    recruiting: "募集中"
+    in_progress: "進行中"
+    on_hold: "保留"
+    completed: "完了"
+    cancelled: "中止"
+    
+  # メンバー案件ステータスの値マッピング
+  member_project_status:
+    assigned: "アサイン済み"
+    working: "稼働中"
+    completed: "完了"
+    paused: "一時停止"
+    terminated: "終了"
+
+# バリデーション設定
+validation:
+  required_properties:
+    member_database:
+      - "name"
+      - "status"
+    project_database:
+      - "name"
+      - "status"
+    member_project_database:
+      - "member"
+      - "project"
+      - "status"
+  
+  date_properties:
+    - "application_date"
+    - "hire_date"
+    - "first_counseling_date"
+    - "first_work_start_date"
+    - "last_work_start_date"
+    - "last_work_end_date"
+    - "contract_start_date"
+    - "contract_end_date"
+    - "start_date"
+    - "end_date"
+    - "recruitment_deadline"
+  
+  number_properties:
+    - "hourly_rate"
+    - "monthly_hours"
+    - "weekly_hours" 

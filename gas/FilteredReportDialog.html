@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+  <style>
+    body { 
+      font-family: Arial, sans-serif; 
+      margin: 20px; 
+      background-color: #f5f5f5;
+    }
+    .container { 
+      text-align: center; 
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    h3 { 
+      color: #333; 
+      margin-bottom: 20px;
+    }
+    .form-group {
+      margin: 15px 0;
+      text-align: left;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+      color: #555;
+    }
+    select, input {
+      width: 100%;
+      padding: 10px;
+      font-size: 14px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+    select:focus, input:focus {
+      outline: none;
+      border-color: #4285f4;
+      box-shadow: 0 0 5px rgba(66, 133, 244, 0.3);
+    }
+    .button-group {
+      margin-top: 25px;
+      text-align: center;
+    }
+    button {
+      padding: 12px 24px;
+      font-size: 16px;
+      margin: 0 10px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    .btn-primary {
+      background-color: #4285f4;
+      color: white;
+    }
+    .btn-primary:hover {
+      background-color: #3367d6;
+    }
+    .btn-secondary {
+      background-color: #f1f3f4;
+      color: #333;
+    }
+    .btn-secondary:hover {
+      background-color: #e8eaed;
+    }
+    .loading {
+      display: none;
+      margin-top: 15px;
+      color: #666;
+    }
+    .error {
+      color: #d93025;
+      margin-top: 10px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h3>フィルタ付きレポート生成</h3>
+    
+    <div class="form-group">
+      <label for="weekSelect">対象週:</label>
+      <select id="weekSelect">
+        <?!= weeks.map(week => `<option value="${week.value}">${week.label}</option>`).join('') ?>
+      </select>
+    </div>
+    
+    <div class="form-group">
+      <label for="platformSelect">プラットフォーム:</label>
+      <select id="platformSelect">
+        <?!= platforms.map(platform => `<option value="${platform.value}">${platform.label}</option>`).join('') ?>
+      </select>
+    </div>
+    
+    <div class="form-group">
+      <label for="jobCategorySelect">職種:</label>
+      <select id="jobCategorySelect">
+        <?!= jobCategories.map(category => `<option value="${category.value}">${category.label}</option>`).join('') ?>
+      </select>
+    </div>
+    
+    <div class="button-group">
+      <button class="btn-secondary" onclick="closeDialog()">キャンセル</button>
+      <button class="btn-primary" onclick="generateReport()">レポート生成</button>
+    </div>
+    
+    <div class="loading" id="loading">
+      レポート生成中... しばらくお待ちください。
+    </div>
+    
+    <div class="error" id="error"></div>
+  </div>
+  
+  <script>
+    function generateReport() {
+      const weekSelect = document.getElementById('weekSelect');
+      const platformSelect = document.getElementById('platformSelect');
+      const jobCategorySelect = document.getElementById('jobCategorySelect');
+      const loading = document.getElementById('loading');
+      const error = document.getElementById('error');
+      
+      const selectedWeek = weekSelect.value;
+      const selectedPlatform = platformSelect.value;
+      const selectedJobCategory = jobCategorySelect.value;
+      
+      if (!selectedWeek) {
+        showError('週を選択してください');
+        return;
+      }
+      
+      // ローディング表示
+      loading.style.display = 'block';
+      error.style.display = 'none';
+      
+      // GAS関数を呼び出し
+      google.script.run
+        .withSuccessHandler(function(result) {
+          loading.style.display = 'none';
+          
+          if (result.success) {
+            // 成功時の処理
+            showReportResult(result);
+          } else {
+            showError('エラーが発生しました: ' + result.error);
+          }
+        })
+        .withFailureHandler(function(error) {
+          loading.style.display = 'none';
+          showError('エラーが発生しました: ' + error.message);
+        })
+        .generateFilteredReport(selectedWeek, selectedPlatform, selectedJobCategory);
+    }
+    
+    function showReportResult(result) {
+      // 結果を表示（後で実装）
+      alert(`レポート生成完了！\n\n週: ${result.week}\n期間: ${result.dateRange}\nプラットフォーム: ${result.platform}\n職種: ${result.jobCategory}\n\n応募数: ${result.metrics.applyCount}件`);
+      
+      // ダイアログを閉じる
+      google.script.host.close();
+    }
+    
+    function showError(message) {
+      const error = document.getElementById('error');
+      error.textContent = message;
+      error.style.display = 'block';
+    }
+    
+    function closeDialog() {
+      google.script.host.close();
+    }
+  </script>
+</body>
+</html>

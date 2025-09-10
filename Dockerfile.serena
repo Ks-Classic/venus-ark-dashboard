@@ -1,0 +1,19 @@
+FROM python:3.11-slim
+
+# 必要なパッケージをインストール
+RUN apt-get update && apt-get install -y \
+    git \
+    && rm -rf /var/lib/apt/lists/*
+
+# uvをインストール
+RUN pip install uv
+
+# 作業ディレクトリを設定
+WORKDIR /app
+
+# Serena MCPサーバーをインストール
+RUN uv run --from git+https://github.com/oraios/serena serena-mcp-server --help
+
+# エントリーポイントを設定
+ENTRYPOINT ["uv", "run", "--from", "git+https://github.com/oraios/serena", "serena-mcp-server"]
+CMD ["--context", "ide-assistant", "--project", "."]

@@ -1,0 +1,37 @@
+ンバーデータ取得中: 148件
+✅ 全メンバーデータ取得完了: 148件
+🔍 メンバーステータス分布:
+  - 稼働中: 34人
+  - 案件斡旋: 1人
+  - 面接対策: 3人
+  - 面接: 2人
+  - 結果待ち: 0人
+  - 採用: 0人
+  - その他: 108人
+[DEBUG] Firestore instance created.
+メンバーバッチ 1 保存完了: 148件
+148件のメンバーデータを同期しました
+案件データを同期中...
+案件データ取得エラー: Error: NOTION_PROJECT_DB_ID が設定されていません
+    at fetchProjects (lib\integrations\notion.ts:244:12)
+    at POST (app\api\work-status\sync\route.ts:76:41)
+  242 |   try {
+  243 |     if (!NOTION_PROJECT_DB_ID) {
+> 244 |       throw new Error('NOTION_PROJECT_DB_ID が設定されていません');
+      |            ^
+  245 |     }
+  246 |
+  247 |     // データベース情報を取得
+データ同期エラー: Error: NOTION_PROJECT_DB_ID が設定されていません
+    at fetchProjects (lib\integrations\notion.ts:244:12)
+    at POST (app\api\work-status\sync\route.ts:76:41)
+  242 |   try {
+  243 |     if (!NOTION_PROJECT_DB_ID) {
+> 244 |       throw new Error('NOTION_PROJECT_DB_ID が設定されていません');
+      |            ^
+  245 |     }
+  246 |
+  247 |     // データベース情報を取得
+  compression [ 'application/json' ] not compressible +25s
+  compression no compression: filtered +0ms
+ POST /api/work-status/sync 500 in 23702ms

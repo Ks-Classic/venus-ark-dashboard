@@ -1,0 +1,430 @@
+[2025-07-18 06:54:17] INFO: レポート保存完了: 2025-07-W03-撮影スタッフ
+[2025-07-18 06:54:17] INFO: --- 週次レポートの再生成完了 ---
+[2025-07-18 06:54:17] INFO: 完了時刻: 2025/7/18 6:54:17 (所要時間: 35.24秒)
+[2025-07-18 06:54:17] INFO: === 採用データ同期正常完了 (週次 (2025-7-3)) ===
+
+Recruitment data sync completed successfully.
+ POST /api/sync/recruitment 200 in 48550ms
+[DEBUG] Firestore instance created.
+ GET /api/recruitment/weekly-reports?year=2025&month=7&weekInMonth=3 200 in 1219ms
+ GET /api/recruitment/weekly-reports?year=2025&month=6&weekInMonth=4 200 in 1224ms
+ GET /api/recruitment/weekly-reports?year=2025&month=7&weekInMonth=2 200 in 1228ms
+ GET /api/recruitment/weekly-reports?year=2025&month=7&weekInMonth=1 200 in 1230ms
+ GET /api/recruitment/weekly-reports?year=2025&month=6&weekInMonth=4 200 in 1205ms
+ GET /api/recruitment/weekly-reports?year=2025&month=7&weekInMonth=3 200 in 1208ms
+ GET /api/recruitment/weekly-reports?year=2025&month=7&weekInMonth=1 200 in 1210ms
+ GET /api/recruitment/weekly-reports?year=2025&month=7&weekInMonth=2 200 in 1213ms
+Recruitment data sync started via API for week: 2025-7-3...
+ GET /api/recruitment/weekly-reports?year=2025&month=6&weekInMonth=4 200 in 196ms
+ GET /api/recruitment/weekly-reports?year=2025&month=7&weekInMonth=1 200 in 200ms
+ GET /api/recruitment/weekly-reports?year=2025&month=7&weekInMonth=3 200 in 211ms
+ GET /api/recruitment/weekly-reports?year=2025&month=7&weekInMonth=2 200 in 232ms
+ GET /api/recruitment/weekly-reports?year=2025&month=6&weekInMonth=4 200 in 218ms
+ GET /api/recruitment/weekly-reports?year=2025&month=7&weekInMonth=3 200 in 232ms
+ GET /api/recruitment/weekly-reports?year=2025&month=7&weekInMonth=2 200 in 230ms
+ GET /api/recruitment/weekly-reports?year=2025&month=7&weekInMonth=1 200 in 231ms
+Sync script stdout: 
+> my-v0-project@0.1.0 sync:recruitment
+> ts-node -r tsconfig-paths/register --project tsconfig.scripts.json scripts/sync-recruitment-data.ts --week=2025-7-3
+
+[2025-07-18 07:23:21] INFO: コマンドラインから手動で同期処理を実行します。
+[DEBUG] Firebase Admin SDK initialized from environment variable.
+[2025-07-18 07:23:21] INFO: 対象週: 2025-7-3
+[2025-07-18 07:23:21] INFO: === Venus Ark 採用データ同期開始 (週次 (2025-7-3)) ===
+[2025-07-18 07:23:21] INFO: 開始時刻: 2025/7/18 7:23:21
+[2025-07-18 07:23:21] INFO: 対象期間: 2025/7/12 - 2025/7/18
+[2025-07-18 07:23:21] INFO: Firebase Admin SDK Initialized.
+[2025-07-18 07:23:21] INFO: 対象スプレッドシート: 1YCniJwv7BBR6zvrIu_tOL1dwDgNLIG-P-YM90yITrO4
+[2025-07-18 07:23:21] INFO: --- エントリーフォームからタイムスタンプ取得中 ---
+エントリーフォームから 265 件のタイムスタンプ情報を取得しました。
+[2025-07-18 07:23:25] INFO: タイムスタンプ 0 件取得完了
+[2025-07-18 07:23:25] INFO: --- Google Sheetsからデータ取得中 ---
+[2025-07-18 07:23:25] INFO: --- シート「indeed応募者管理(SNS運用)」の処理開始 ---
+[2025-07-18 07:23:28] INFO: 取得データ数: 1996 件
+[2025-07-18 07:23:28] INFO: シート「indeed応募者管理(SNS運用)」: 有効データ 0 件、スキップ 1085 件
+[2025-07-18 07:23:28] INFO: --- シート「engageその他応募者管理(SNS運用)」の処理開始 ---
+[2025-07-18 07:23:28] INFO: 取得データ数: 993 件
+[2025-07-18 07:23:28] INFO: シート「engageその他応募者管理(SNS運用)」: 有効データ 0 件、スキップ 832 件
+[2025-07-18 07:23:28] INFO: --- シート「indeed応募者管理(動画編集)」の処理開始 ---
+[2025-07-18 07:23:30] INFO: 取得データ数: 3737 件
+[DEBUG] Firestore instance created.
+[2025-07-18 07:23:30] INFO: シート「indeed応募者管理(動画編集)」: 有効データ 27 件、スキップ 35 件
+[2025-07-18 07:23:30] INFO: シート「indeed応募者管理(動画編集)」: Firestoreに同期中...
+[2025-07-18 07:23:40] INFO: シート「indeed応募者管理(動画編集)」: 同期完了
+    processed: 27
+    added: 0
+    updated: 27
+    errors: 0
+[2025-07-18 07:23:40] INFO: --- シート「engageその他応募者管理(動画編集)」の処理開始 ---
+[2025-07-18 07:23:43] INFO: 取得データ数: 983 件
+[2025-07-18 07:23:43] INFO: シート「engageその他応募者管理(動画編集)」: 有効データ 0 件、スキップ 478 件
+[2025-07-18 07:23:43] INFO: --- シート「indeed応募者管理(ライター/AIライター)」の処理開始 ---
+[2025-07-18 07:23:44] INFO: 取得データ数: 1987 件
+[2025-07-18 07:23:44] INFO: シート「indeed応募者管理(ライター/AIライター)」: 有効データ 12 件、スキップ 943 件
+[2025-07-18 07:23:44] INFO: シート「indeed応募者管理(ライター/AIライター)」: Firestoreに同期中...
+[2025-07-18 07:23:48] INFO: シート「indeed応募者管理(ライター/AIライター)」: 同期完了
+    processed: 12
+    added: 0
+    updated: 12
+    errors: 0
+[2025-07-18 07:23:48] INFO: --- シート「engageその他応募者管理(ライター/AIライター)」の処理開始 ---
+[2025-07-18 07:23:49] INFO: 取得データ数: 1099 件
+[2025-07-18 07:23:49] INFO: シート「engageその他応募者管理(ライター/AIライター)」: 有効データ 3 件、スキップ 997 件
+[2025-07-18 07:23:49] INFO: シート「engageその他応募者管理(ライター/AIライター)」: Firestoreに同期中...
+[2025-07-18 07:23:50] INFO: シート「engageその他応募者管理(ライター/AIライター)」: 同期完了
+    processed: 3
+    added: 0
+    updated: 3
+    errors: 0
+[2025-07-18 07:23:50] INFO: --- シート「indeed応募者管理(撮影スタッフ)」の処理開始 ---
+[2025-07-18 07:23:51] INFO: 取得データ数: 998 件
+[2025-07-18 07:23:51] INFO: シート「indeed応募者管理(撮影スタッフ)」: 有効データ 2 件、スキップ 840 件
+[2025-07-18 07:23:51] INFO: シート「indeed応募者管理(撮影スタッフ)」: Firestoreに同期中...
+[2025-07-18 07:23:52] INFO: シート「indeed応募者管理(撮影スタッフ)」: 同期完了
+    processed: 2
+    added: 0
+    updated: 2
+    errors: 0
+[2025-07-18 07:23:52] INFO: --- シート「engageその他応募者管理(撮影スタッフ)」の処理開始 ---
+[2025-07-18 07:23:53] INFO: 取得データ数: 998 件
+[2025-07-18 07:23:53] INFO: シート「engageその他応募者管理(撮影スタッフ)」: 有効データ 0 件、スキップ 995 件
+[2025-07-18 07:23:53] INFO: === 同期結果サマリー (週次 (2025-7-3)) ===
+    summary: {
+      "totalRows": 12791,
+      "totalValid": 44,
+      "totalProcessed": 44,
+      "totalAdded": 0,
+      "totalUpdated": 44,
+      "totalErrors": 0,
+      "totalSkipped": 6205
+    }
+[2025-07-18 07:23:53] INFO: --- 週次レポートの再生成開始 ---
+[2025-07-18 07:23:53] INFO: 影響のある週: 2025-7-3
+[2025-07-18 07:23:53] INFO: レポート生成中: 2025年7月3週 for SNS運用
+[DEBUG] Upserting report with ID: 2025-W29-SNS運用
+[DEBUG] Report data (before upsert): {
+  "id": "2025-07-W03-SNS運用",
+  "reportType": "recruitment",
+  "year": 2025,
+  "weekNumber": 29,
+  "startDate": "2025-07-12",
+  "endDate": "2025-07-18",
+  "jobCategory": "SNS運用",
+  "recruitmentMetrics": {
+    "applyCount": 0,
+    "applyRejectCount": 0,
+    "applyContinueCount": 0,
+    "documentSubmitted": 0,
+    "documentRejectCount": 0,
+    "documentContinueCount": 0,
+    "interviewScheduled": 0,
+    "interviewConducted": 0,
+    "interviewCancelled": 0,
+    "hireCount": 0,
+    "offerAcceptedCount": 0,
+    "rejectionBreakdown": {
+      "experienced": 0,
+      "elderly": 0,
+      "unsuitable": 0,
+      "foreign": 0,
+      "relocation_check": 0,
+      "post_offer_withdrawal": 0,
+      "other": 0
+    },
+    "interviewRate": 0,
+    "hireRate": 0,
+    "acceptanceRate": 0
+  },
+  "createdAt": "SERVER_TIMESTAMP",
+  "updatedAt": "SERVER_TIMESTAMP",
+  "generatedAt": "SERVER_TIMESTAMP",
+  "isManuallyEdited": false
+}
+Weekly Report 2025-W29-SNS運用 upserted successfully.
+[2025-07-18 07:23:54] INFO: レポート保存完了: 2025-07-W03-SNS運用
+[2025-07-18 07:23:54] INFO: レポート生成中: 2025年7月3週 for 動画クリエイター
+[DEBUG] Upserting report with ID: 2025-W29-動画クリエイター
+[DEBUG] Report data (before upsert): {
+  "id": "2025-07-W03-動画クリエイター",
+  "reportType": "recruitment",
+  "year": 2025,
+  "weekNumber": 29,
+  "startDate": "2025-07-12",
+  "endDate": "2025-07-18",
+  "jobCategory": "動画クリエイター",
+  "recruitmentMetrics": {
+    "applyCount": 31,
+    "applyRejectCount": 0,
+    "applyContinueCount": 29,
+    "documentSubmitted": 27,
+    "documentRejectCount": 0,
+    "documentContinueCount": 0,
+    "interviewScheduled": 0,
+    "interviewConducted": 0,
+    "interviewCancelled": 0,
+    "hireCount": 0,
+    "offerAcceptedCount": 0,
+    "rejectionBreakdown": {
+      "experienced": 0,
+      "elderly": 0,
+      "unsuitable": 0,
+      "foreign": 0,
+      "relocation_check": 0,
+      "post_offer_withdrawal": 0,
+      "other": 2
+    },
+    "interviewRate": 0,
+    "hireRate": 0,
+    "acceptanceRate": 0
+  },
+  "createdAt": "SERVER_TIMESTAMP",
+  "updatedAt": "SERVER_TIMESTAMP",
+  "generatedAt": "SERVER_TIMESTAMP",
+  "isManuallyEdited": false
+}
+Weekly Report 2025-W29-動画クリエイター upserted successfully.
+[2025-07-18 07:23:55] INFO: レポート保存完了: 2025-07-W03-動画クリエイター
+[2025-07-18 07:23:55] INFO: レポート生成中: 2025年7月3週 for AIライター
+[DEBUG] Upserting report with ID: 2025-W29-AIライター
+[DEBUG] Report data (before upsert): {
+  "id": "2025-07-W03-AIライター",
+  "reportType": "recruitment",
+  "year": 2025,
+  "weekNumber": 29,
+  "startDate": "2025-07-12",
+  "endDate": "2025-07-18",
+  "jobCategory": "AIライター",
+  "recruitmentMetrics": {
+    "applyCount": 16,
+    "applyRejectCount": 0,
+    "applyContinueCount": 16,
+    "documentSubmitted": 15,
+    "documentRejectCount": 0,
+    "documentContinueCount": 0,
+    "interviewScheduled": 0,
+    "interviewConducted": 0,
+    "interviewCancelled": 0,
+    "hireCount": 0,
+    "offerAcceptedCount": 0,
+    "rejectionBreakdown": {
+      "experienced": 0,
+      "elderly": 0,
+      "unsuitable": 0,
+      "foreign": 0,
+      "relocation_check": 0,
+      "post_offer_withdrawal": 0,
+      "other": 0
+    },
+    "interviewRate": 0,
+    "hireRate": 0,
+    "acceptanceRate": 0
+  },
+  "createdAt": "SERVER_TIMESTAMP",
+  "updatedAt": "SERVER_TIMESTAMP",
+  "generatedAt": "SERVER_TIMESTAMP",
+  "isManuallyEdited": false
+}
+Weekly Report 2025-W29-AIライター upserted successfully.
+[2025-07-18 07:23:56] INFO: レポート保存完了: 2025-07-W03-AIライター
+[2025-07-18 07:23:56] INFO: レポート生成中: 2025年7月3週 for 撮影スタッフ
+[DEBUG] Upserting report with ID: 2025-W29-撮影スタッフ
+[DEBUG] Report data (before upsert): {
+  "id": "2025-07-W03-撮影スタッフ",
+  "reportType": "recruitment",
+  "year": 2025,
+  "weekNumber": 29,
+  "startDate": "2025-07-12",
+  "endDate": "2025-07-18",
+  "jobCategory": "撮影スタッフ",
+  "recruitmentMetrics": {
+    "applyCount": 2,
+    "applyRejectCount": 0,
+    "applyContinueCount": 2,
+    "documentSubmitted": 2,
+    "documentRejectCount": 0,
+    "documentContinueCount": 0,
+    "interviewScheduled": 0,
+    "interviewConducted": 0,
+    "interviewCancelled": 0,
+    "hireCount": 0,
+    "offerAcceptedCount": 0,
+    "rejectionBreakdown": {
+      "experienced": 0,
+      "elderly": 0,
+      "unsuitable": 0,
+      "foreign": 0,
+      "relocation_check": 0,
+      "post_offer_withdrawal": 0,
+      "other": 0
+    },
+    "interviewRate": 0,
+    "hireRate": 0,
+    "acceptanceRate": 0
+  },
+  "createdAt": "SERVER_TIMESTAMP",
+  "updatedAt": "SERVER_TIMESTAMP",
+  "generatedAt": "SERVER_TIMESTAMP",
+  "isManuallyEdited": false
+}
+Weekly Report 2025-W29-撮影スタッフ upserted successfully.
+[2025-07-18 07:23:57] INFO: レポート保存完了: 2025-07-W03-撮影スタッフ
+[2025-07-18 07:23:57] INFO: --- 週次レポートの再生成完了 ---
+[2025-07-18 07:23:57] INFO: 完了時刻: 2025/7/18 7:23:57 (所要時間: 36.28秒)
+[2025-07-18 07:23:57] INFO: === 採用データ同期正常完了 (週次 (2025-7-3)) ===
+
+Recruitment data sync completed successfully.
+ POST /api/sync/recruitment 200 in 49053ms
+ GET /api/recruitment/weekly-reports?year=2025&month=7&weekInMonth=1 200 in 1489ms
+ GET /api/recruitment/weekly-reports?year=2025&month=7&weekInMonth=3 200 in 1493ms
+ GET /api/recruitment/weekly-reports?year=2025&month=6&weekInMonth=4 200 in 1495ms
+ GET /api/recruitment/weekly-reports?year=2025&month=7&weekInMonth=2 200 in 1500ms
+
+
+[Debug] RecruitmentCollectionTable received reports: 
+(4) [{…}, {…}, {…}, {…}]
+0
+: 
+{id: 'empty-2025-6-4', reportType: 'recruitment', year: 2025, month: 6, weekInMonth: 4, …}
+1
+: 
+{id: 'empty-2025-7-1', reportType: 'recruitment', year: 2025, month: 7, weekInMonth: 1, …}
+2
+: 
+{id: 'empty-2025-7-2', reportType: 'recruitment', year: 2025, month: 7, weekInMonth: 2, …}
+3
+: 
+endDate
+: 
+"2025-07-18"
+id
+: 
+"empty-2025-7-3"
+jobCategory
+: 
+"動画クリエイター"
+month
+: 
+7
+recruitmentMetrics
+: 
+{applyCount: 0, applyRejectCount: 0, applyContinueCount: 0, documentSubmitted: 0, documentRejectCount: 0, …}
+reportType
+: 
+"recruitment"
+startDate
+: 
+"2025-07-12"
+updatedAt
+: 
+"2025-07-17T22:48:43.675Z"
+weekInMonth
+: 
+3
+year
+: 
+2025
+[[Prototype]]
+: 
+Object
+length
+: 
+4
+[[Prototype]]
+: 
+Array(0)
+C:\Users\ykoha\OneDr…ection-table.tsx:55 [Debug] Mapped display reports: 
+(4) [{…}, {…}, {…}, {…}]
+0
+: 
+{id: 'empty-2025-6-4', reportType: 'recruitment', year: 2025, month: 6, weekInMonth: 4, …}
+1
+: 
+{id: 'empty-2025-7-1', reportType: 'recruitment', year: 2025, month: 7, weekInMonth: 1, …}
+2
+: 
+{id: 'empty-2025-7-2', reportType: 'recruitment', year: 2025, month: 7, weekInMonth: 2, …}
+3
+: 
+endDate
+: 
+"2025-07-18"
+id
+: 
+"empty-2025-7-3"
+jobCategory
+: 
+"動画クリエイター"
+month
+: 
+7
+recruitmentMetrics
+: 
+acceptanceRate
+: 
+0
+applyContinueCount
+: 
+0
+applyCount
+: 
+0
+applyRejectCount
+: 
+0
+documentContinueCount
+: 
+0
+documentRejectCount
+: 
+0
+documentSubmitted
+: 
+0
+hireCount
+: 
+0
+hireRate
+: 
+0
+interviewCancelled
+: 
+0
+interviewConducted
+: 
+0
+interviewRate
+: 
+0
+interviewScheduled
+: 
+0
+offerAcceptedCount
+: 
+0
+rejectionBreakdown
+: 
+{experienced: 0, elderly: 0, unsuitable: 0, foreign: 0, relocation_check: 0, …}
+[[Prototype]]
+: 
+Object
+reportType
+: 
+"recruitment"
+startDate
+: 
+"2025-07-12"
+updatedAt
+: 
+"2025-07-17T22:48:43.675Z"
+weekInMonth
+: 
+3
+year
+: 
+2025
+[[Prototype]]
+: 
+Object
+length
+: 
+4

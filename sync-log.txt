@@ -1,0 +1,66 @@
+[2025/7/16 17:15:46] --- [DEBUG] スプレッドシートのヘッダー取得開始 ---
+[2025/7/16 17:16:44] --- [DEBUG] スプレッドシートのヘッダー取得開始 ---
+[2025/7/16 17:16:44] 対象スプレッドシートID: 1YCniJwv7BBR6zvrIu_tOL1dwDgNLIG-P-YM90yITrO4
+[2025/7/16 17:22:19] --- [API IN] /api/recruitment/sync-week POST for week 2025-7-3 ---
+[2025/7/16 17:22:19] Target date range: 2025-07-12T00:00:00.000Z to 2025-07-18T23:59:59.999Z
+[2025/7/16 17:22:21] Processing sheets: [indeed応募者管理(動画編集), engageその他応募者管理(動画編集), engageその他応募者管理(SNS運用), indeed応募者管理(SNS運用), indeed応募者管理(ライター/AIライター), engageその他応募者管理(ライター/AIライター), indeed応募者管理(撮影スタッフ) , engageその他応募者管理(撮影スタッフ) , indeed応募者管理(AI人材育成/マーケ) , indeed応募者管理(エンジニア・デザイナー), engageその他応募者管理(エンジニア・デザイナー)]
+[2025/7/16 17:22:21] Sheet "indeed応募者管理(動画編集)": Found 14 rows in the target week.
+[2025/7/16 17:22:22] Sheet "engageその他応募者管理(動画編集)": Found 0 rows in the target week.
+[2025/7/16 17:22:23] Sheet "engageその他応募者管理(SNS運用)": Found 0 rows in the target week.
+[2025/7/16 17:22:24] Sheet "indeed応募者管理(SNS運用)": Found 0 rows in the target week.
+[2025/7/16 17:22:24] Sheet "indeed応募者管理(ライター/AIライター)": Found 11 rows in the target week.
+[2025/7/16 17:22:25] Sheet "engageその他応募者管理(ライター/AIライター)": Found 3 rows in the target week.
+[2025/7/16 17:22:25] Sheet "indeed応募者管理(撮影スタッフ) ": Found 1 rows in the target week.
+[2025/7/16 17:22:26] Sheet "engageその他応募者管理(撮影スタッフ) ": Found 0 rows in the target week.
+[2025/7/16 17:22:27] Sheet "indeed応募者管理(AI人材育成/マーケ) ": Found 0 rows in the target week.
+[2025/7/16 17:22:27] Sheet "indeed応募者管理(エンジニア・デザイナー)": Found 0 rows in the target week.
+[2025/7/16 17:22:28] Sheet "engageその他応募者管理(エンジニア・デザイナー)": Found 0 rows in the target week.
+[2025/7/16 17:23:10] Regenerated weekly reports for week 2025-7-3.
+[2025/7/16 17:45:28] --- [API IN] /api/recruitment/sync-week POST for week 2025-7-3 ---
+[2025/7/16 17:45:28] Target date range: 2025-07-12T00:00:00.000Z to 2025-07-18T23:59:59.999Z
+[2025/7/16 17:45:30] Processing sheets: [indeed応募者管理(動画編集), engageその他応募者管理(動画編集), engageその他応募者管理(SNS運用), indeed応募者管理(SNS運用), indeed応募者管理(ライター/AIライター), engageその他応募者管理(ライター/AIライター), indeed応募者管理(撮影スタッフ) , engageその他応募者管理(撮影スタッフ) , indeed応募者管理(AI人材育成/マーケ) , indeed応募者管理(エンジニア・デザイナー), engageその他応募者管理(エンジニア・デザイナー)]
+[2025/7/16 17:45:31] Sheet "indeed応募者管理(動画編集)": Found 14 rows in the target week.
+[2025/7/16 17:45:32] Sheet "engageその他応募者管理(動画編集)": Found 0 rows in the target week.
+[2025/7/16 17:45:32] Sheet "engageその他応募者管理(SNS運用)": Found 0 rows in the target week.
+[2025/7/16 17:45:33] Sheet "indeed応募者管理(SNS運用)": Found 0 rows in the target week.
+[2025/7/16 17:45:34] Sheet "indeed応募者管理(ライター/AIライター)": Found 11 rows in the target week.
+[2025/7/16 17:45:34] Sheet "engageその他応募者管理(ライター/AIライター)": Found 3 rows in the target week.
+[2025/7/16 17:45:35] Sheet "indeed応募者管理(撮影スタッフ) ": Found 1 rows in the target week.
+[2025/7/16 17:45:35] Sheet "engageその他応募者管理(撮影スタッフ) ": Found 0 rows in the target week.
+[2025/7/16 17:45:36] Sheet "indeed応募者管理(AI人材育成/マーケ) ": Found 0 rows in the target week.
+[2025/7/16 17:45:36] Sheet "indeed応募者管理(エンジニア・デザイナー)": Found 0 rows in the target week.
+[2025/7/16 17:45:37] Sheet "engageその他応募者管理(エンジニア・デザイナー)": Found 0 rows in the target week.
+[2025/7/16 17:46:32] Regenerated weekly reports for week 2025-7-3.
+[2025/7/16 17:46:32] [ERROR] /api/recruitment/sync-week: updatedReports is not defined
+[2025/7/16 17:57:40] --- [API IN] /api/recruitment/sync-week POST for week 2025-7-3 ---
+[2025/7/16 17:57:40] Target date range: 2025-07-12T00:00:00.000Z to 2025-07-18T23:59:59.999Z
+[2025/7/16 17:57:41] Processing sheets: [indeed応募者管理(動画編集), engageその他応募者管理(動画編集), engageその他応募者管理(SNS運用), indeed応募者管理(SNS運用), indeed応募者管理(ライター/AIライター), engageその他応募者管理(ライター/AIライター), indeed応募者管理(撮影スタッフ) , engageその他応募者管理(撮影スタッフ) , indeed応募者管理(AI人材育成/マーケ) , indeed応募者管理(エンジニア・デザイナー), engageその他応募者管理(エンジニア・デザイナー)]
+[2025/7/16 17:57:42] Sheet "indeed応募者管理(動画編集)": Found 14 rows in the target week.
+[2025/7/16 17:57:43] Sheet "engageその他応募者管理(動画編集)": Found 0 rows in the target week.
+[2025/7/16 17:57:43] Sheet "engageその他応募者管理(SNS運用)": Found 0 rows in the target week.
+[2025/7/16 17:57:44] Sheet "indeed応募者管理(SNS運用)": Found 0 rows in the target week.
+[2025/7/16 17:57:45] Sheet "indeed応募者管理(ライター/AIライター)": Found 11 rows in the target week.
+[2025/7/16 17:57:45] Sheet "engageその他応募者管理(ライター/AIライター)": Found 3 rows in the target week.
+[2025/7/16 17:57:46] Sheet "indeed応募者管理(撮影スタッフ) ": Found 1 rows in the target week.
+[2025/7/16 17:57:46] Sheet "engageその他応募者管理(撮影スタッフ) ": Found 0 rows in the target week.
+[2025/7/16 17:57:47] Sheet "indeed応募者管理(AI人材育成/マーケ) ": Found 0 rows in the target week.
+[2025/7/16 17:57:47] Sheet "indeed応募者管理(エンジニア・デザイナー)": Found 0 rows in the target week.
+[2025/7/16 17:57:48] Sheet "engageその他応募者管理(エンジニア・デザイナー)": Found 0 rows in the target week.
+[2025/7/16 17:58:36] Regenerated weekly reports for week 2025-7-3.
+[2025/7/16 17:58:36] [ERROR] /api/recruitment/sync-week: updatedReports is not defined
+[2025/7/16 18:04:10] --- [API IN] /api/recruitment/sync-week POST for week 2025-7-3 ---
+[2025/7/16 18:04:10] Target date range: 2025-07-12T00:00:00.000Z to 2025-07-18T23:59:59.999Z
+[2025/7/16 18:04:14] Processing sheets: [indeed応募者管理(動画編集), engageその他応募者管理(動画編集), engageその他応募者管理(SNS運用), indeed応募者管理(SNS運用), indeed応募者管理(ライター/AIライター), engageその他応募者管理(ライター/AIライター), indeed応募者管理(撮影スタッフ) , engageその他応募者管理(撮影スタッフ) , indeed応募者管理(AI人材育成/マーケ) , indeed応募者管理(エンジニア・デザイナー), engageその他応募者管理(エンジニア・デザイナー)]
+[2025/7/16 18:05:19] Regenerated weekly reports for week 2025-7-3.
+[2025/7/16 18:09:07] --- [API IN] /api/recruitment/sync-week POST for week 2025-7-3 ---
+[2025/7/16 18:09:07] Target date range: 2025-07-12T00:00:00.000Z to 2025-07-18T23:59:59.999Z
+[2025/7/16 18:09:08] Processing sheets: [indeed応募者管理(動画編集), engageその他応募者管理(動画編集), engageその他応募者管理(SNS運用), indeed応募者管理(SNS運用), indeed応募者管理(ライター/AIライター), engageその他応募者管理(ライター/AIライター), indeed応募者管理(撮影スタッフ) , engageその他応募者管理(撮影スタッフ) , indeed応募者管理(AI人材育成/マーケ) , indeed応募者管理(エンジニア・デザイナー), engageその他応募者管理(エンジニア・デザイナー)]
+[2025/7/16 18:10:08] Regenerated weekly reports for week 2025-7-3.
+[2025/7/16 18:16:45] --- [API IN] /api/recruitment/sync-week POST for week 2025-7-3 ---
+[2025/7/16 18:16:45] Target date range: 2025-07-12T00:00:00.000Z to 2025-07-18T23:59:59.999Z
+[2025/7/16 18:17:00] Processing sheets: [indeed応募者管理(動画編集), engageその他応募者管理(動画編集), engageその他応募者管理(SNS運用), indeed応募者管理(SNS運用), indeed応募者管理(ライター/AIライター), engageその他応募者管理(ライター/AIライター), indeed応募者管理(撮影スタッフ) , engageその他応募者管理(撮影スタッフ) , indeed応募者管理(AI人材育成/マーケ) , indeed応募者管理(エンジニア・デザイナー), engageその他応募者管理(エンジニア・デザイナー)]
+[2025/7/16 18:18:01] Regenerated weekly reports for week 2025-7-3.
+[2025/7/16 18:24:59] --- [API IN] /api/recruitment/sync-week POST for week 2025-7-3 ---
+[2025/7/16 18:24:59] Target date range: 2025-07-12T00:00:00.000Z to 2025-07-18T23:59:59.999Z
+[2025/7/16 18:25:00] Processing sheets: [indeed応募者管理(動画編集), engageその他応募者管理(動画編集), engageその他応募者管理(SNS運用), indeed応募者管理(SNS運用), indeed応募者管理(ライター/AIライター), engageその他応募者管理(ライター/AIライター), indeed応募者管理(撮影スタッフ) , engageその他応募者管理(撮影スタッフ) , indeed応募者管理(AI人材育成/マーケ) , indeed応募者管理(エンジニア・デザイナー), engageその他応募者管理(エンジニア・デザイナー)]
+[2025/7/16 18:26:04] Regenerated weekly reports for week 2025-7-3.

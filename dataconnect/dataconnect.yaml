@@ -1,0 +1,12 @@
+specVersion: "v1"
+serviceId: "venus-ark-aix"
+location: "asia-northeast1"
+schema:
+  source: "./schema"
+  datasource:
+    postgresql:
+      database: "fdcdb"
+      cloudSql:
+        instanceId: "venus-ark-aix-fdc"
+      # schemaValidation: "COMPATIBLE"
+connectorDirs: ["./connector"]
