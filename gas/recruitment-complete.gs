@@ -430,9 +430,9 @@ function calculateAllMetrics(sheets, weekRange) {
               sheetHired++;
             }
 
-            // 内定受諾数: 面談実施日が対象週のものを1件としてカウント（検算ロジックに合わせる）
+            // 内定受諾数: 内定受諾日（I列）が対象週内のものをカウント
             const acceptanceDate = row[headerMap['内定受諾日']] || row[headerMap['承諾日']] || row[headerMap['内定承諾日']];
-            if (interviewImplementedDate && isDateInRange(interviewImplementedDate, startDate, endDate)) {
+            if (acceptanceDate && isDateInRange(acceptanceDate, startDate, endDate)) {
               totalAccepted++;
               sheetAccepted++;
             }
@@ -464,10 +464,10 @@ function calculateAllMetrics(sheets, weekRange) {
               sheetLeft++;
             }
 
-            // 不採用理由内訳（応募日が対象週で、応募落ち/書類落ち/不採用/採用辞退系のみ。転居系は除外）
+            // 不採用理由内訳（応募日が対象週で、応募落ち/書類落ち/不採用系のみ。転居系は除外）
             const rejectionReason = (row[headerMap['不採用理由']] || row[headerMap['理由']] || '').toString();
             if (isDateInRange(applicationDate, startDate, endDate)) {
-              if (status.includes('不採用') || status.includes('採用辞退') || status.includes('書類落ち') || status.includes('応募落ち')) {
+              if (status.includes('不採用') || status.includes('書類落ち') || status.includes('応募落ち')) {
                 if (rejectionReason) {
                   if (rejectionReason.includes('経験者') || rejectionReason.includes('経験')) {
                     rejectionBreakdown.experience++;
@@ -477,12 +477,21 @@ function calculateAllMetrics(sheets, weekRange) {
                     rejectionBreakdown.unfit++;
                   } else if (rejectionReason.includes('外国籍') || rejectionReason.includes('国籍')) {
                     rejectionBreakdown.foreign++;
-                  } else if (rejectionReason.includes('辞退') || rejectionReason.includes('内定後') || rejectionReason.includes('採用辞退')) {
-                    rejectionBreakdown.declined++;
                   } else if (!(rejectionReason.includes('転居') || rejectionReason.includes('引っ越し') || rejectionReason.includes('上京'))) {
                     rejectionBreakdown.other++;
                   }
                 }
+              }
+            }
+
+            // 内定後辞退（エントリーフォームのタイムスタンプ基準）
+            if (status.includes('採用辞退')) {
+              const nameValue = row[headerMap['名前']] || row[headerMap['氏名']] || row[headerMap['応募者名']] || '';
+              const normalized = normalizeName(nameValue);
+              const stamps = entryFormIndex[normalized] || [];
+              const matched = findNearestTimestampWithinWindow(stamps, applicationDate, 30);
+              if (matched && isDateInRange(matched, startDate, endDate)) {
+                rejectionBreakdown.declined++;
               }
             }
           } catch (rowError) {

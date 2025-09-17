@@ -6,6 +6,8 @@ import { Button } from '@/components/ui/button';
 import { WeeklyReport } from '@/lib/types/weekly_report';
 import { CellData } from '@/lib/types/recruitment_dashboard';
 import { getWeekDateRange, getWeekNumberFromDate } from '@/lib/date';
+import { SimpleTooltip } from '@/components/ui/simple-tooltip';
+import { RECRUITMENT_COLLECTION_METRICS_DEFINITIONS } from '@/lib/constants/recruitment-metrics-definitions';
 
 interface RecruitmentCollectionTableProps {
   reports: WeeklyReport[];
@@ -122,7 +124,15 @@ export function RecruitmentCollectionTable({
             <tbody>
               {METRICS.map(({ key, label }) => (
                 <tr key={key} className="hover:bg-gray-50">
-                  <td className="py-2 px-3 border-b text-sm font-medium">{label}</td>
+                  <td className="py-2 px-3 border-b text-sm font-medium">
+                    <div className="flex items-center gap-2">
+                      <span>{label}</span>
+                      <SimpleTooltip 
+                        definition={RECRUITMENT_COLLECTION_METRICS_DEFINITIONS[key]?.definition || ''}
+                        method={RECRUITMENT_COLLECTION_METRICS_DEFINITIONS[key]?.method || ''}
+                      />
+                    </div>
+                  </td>
                   {displayReports.map((report, index) => (
                     <td key={index} className="text-center py-2 px-3 border-b">
                       <ClickableCell report={report} metricKey={key} label={label} />

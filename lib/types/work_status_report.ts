@@ -26,6 +26,10 @@ export interface WeeklyDetail {
   startedMembers: StartedMemberDetail[]; // 開始メンバー詳細
   endedMembers: EndedMemberDetail[]; // 終了メンバー詳細
   otherItems: OtherItemDetail[]; // その他人員推移項目
+  // 説明用（累積の有効増減）
+  effectiveStarted?: number; // 有効開始（前週非稼働→当週開始）
+  effectiveEnded?: number; // 有効終了（前週稼働→当週終了）
+  netChangeEffective?: number; // 有効純増減
 }
 
 // 開始メンバー詳細

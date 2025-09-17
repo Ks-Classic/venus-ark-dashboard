@@ -112,10 +112,17 @@
 
 ### 11. 不採用者内訳（rejectionBreakdown）
 - Sheets → ETL
-  - ソース: 採用管理シート `不採用理由/辞退理由`（自由記述）→ `applications.rejection_reason`（小文字化）
+  - ソース: 採用管理シート `不採用理由/辞退理由`（自由記述）
 - 週次算出
-  - 対象: `status='不採用' AND updated_at between [week_start, week_end]`
-  - 分類: `experienced | elderly | unsuitable | foreign | relocation_check | post_offer_withdrawal | other`
+  - **通常の不採用理由**: `application_date between [week_start, week_end]` かつ `status IN ('不採用', '書類落ち', '応募落ち')`
+  - **内定後辞退**: エントリーフォームのタイムスタンプが対象週内 かつ `status='採用辞退'`
+  - 分類: 文字列マッチングで以下のカテゴリに分類
+    - `experienced`: 経験者/経験
+    - `elderly`: 高齢/年齢
+    - `unsuitable`: 不適合/ミスマッチ
+    - `foreign`: 外国籍/国籍
+    - `post_offer_withdrawal`: 辞退/内定後/採用辞退（エントリーフォーム基準）
+    - `other`: 転居/引っ越し/上京以外
   - 集計: 各カテゴリ件数
 - レポート反映
   - `recruitment_metrics.rejectionBreakdown.{category}`

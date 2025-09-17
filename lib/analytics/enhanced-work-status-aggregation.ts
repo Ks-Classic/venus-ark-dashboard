@@ -322,16 +322,27 @@ function calculateWeeklyStatus(
 
 /**
  * 指定日時点でメンバーが稼働中かどうかを判定
- * 総稼働者数の定義: 最新業務開始日が指定日以前であり、かつ(最新業務終了日が空白、または指定日以降)であるメンバー
+ * 総稼働者数の定義: 最新業務開始日が対象週終了日以前であり、かつ（最新業務終了日が空白、または、終了日が開始日より前、または対象週終了日以降）であるメンバー
  */
 export function isWorkingAtDate(member: Member, date: Date): boolean {
   const startDate = member.lastWorkStartDate;
   const endDate = member.lastWorkEndDate;
   
+  // 開始日がない、または指定日より後なら稼働していない
   if (!startDate || startDate > date) {
     return false;
   }
   
-  // 終了日がないか、終了日が指定日以降なら稼働中
-  return !endDate || endDate >= date;
+  // 終了日がない場合は稼働中
+  if (!endDate) {
+    return true;
+  }
+  
+  // 終了日が開始日より前の場合は再稼働パターン（終了後に再開始）として稼働中
+  if (endDate < startDate) {
+    return true;
+  }
+  
+  // 終了日が指定日以降なら稼働中
+  return endDate >= date;
 } 

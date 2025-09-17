@@ -96,12 +96,23 @@ const activeMembers = members.filter(member => {
   const startDate = member.lastWorkStartDate;
   const endDate = member.lastWorkEndDate;
   
+  // 開始日がない、または週終了日より後なら稼働していない
   if (!startDate || startDate > weekEnd) {
     return false;
   }
   
-  // 終了日がないか、終了日が週終了日以降なら稼働中
-  return !endDate || endDate >= weekEnd;
+  // 終了日がない場合は稼働中
+  if (!endDate) {
+    return true;
+  }
+  
+  // 終了日が開始日より前の場合は再稼働パターン（終了後に再開始）として稼働中
+  if (endDate < startDate) {
+    return true;
+  }
+  
+  // 終了日が週終了日以降なら稼働中
+  return endDate >= weekEnd;
 });
 ```
 

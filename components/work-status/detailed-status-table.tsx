@@ -14,12 +14,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
-import { 
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover';
-import { HelpCircle } from 'lucide-react';
+import { SimpleTooltip } from '@/components/ui/simple-tooltip';
 import { WeeklyWorkStatusDetail, WeeklyWorkStatusDetailOptimized, FutureWorkersProjection } from '@/lib/types/work_status_report';
 import { format } from 'date-fns';
 import { ja } from 'date-fns/locale';
@@ -547,6 +542,71 @@ export function DetailedStatusTable({
     setIsDetailDialogOpen(true);
   };
 
+  // 各指標の定義と判定方法（現在の稼働状況）
+  // 注意: 案件終了と切替完了は同じ週に重複する可能性があります
+  const metricDefinitions = {
+    totalWorkers: {
+      definition: '指定時点で稼働中のメンバー総数',
+      method: '以下の条件をすべて満たすメンバーをカウント：\n• 最新業務開始日が対象週終了日以前\n• かつ以下のいずれか：\n  - 最新業務終了日が空白\n  - 終了日が開始日より前（再稼働パターン）\n  - 対象週終了日以降'
+    },
+    newStarted: {
+      definition: 'その週に初めて稼働を開始したメンバー数',
+      method: '以下の条件をすべて満たすメンバーをカウント：\n• 最新業務開始日が週範囲内\n• 最新業務終了日が存在しない（終了履歴がない）'
+    },
+    switching: {
+      definition: '前の案件を終了し、新しい案件に切替えたメンバー数',
+      method: '以下の条件をすべて満たすメンバーをカウント：\n• 最新業務終了日が存在する\n• 最新業務終了日 < 最新業務開始日（終了日が開始日より前）\n• 最新業務開始日が週範囲内'
+    },
+    projectEnded: {
+      definition: 'その週に案件を終了したメンバー数',
+      method: '以下の条件をすべて満たすメンバーをカウント：\n• 最新業務終了日が週範囲内\n• 契約終了日と異なる日付（契約終了と区別）'
+    },
+    contractEnded: {
+      definition: 'その週に契約を終了したメンバー数',
+      method: '以下の条件を満たすメンバーをカウント：\n• 契約終了日が週範囲内'
+    },
+    counselingStarted: {
+      definition: 'その週に初回カウンセリングを実施したメンバー数',
+      method: '以下の条件を満たすメンバーをカウント：\n• 初回実施日が週範囲内'
+    },
+    otherLeft: {
+      definition: '稼働外の任意離脱レコード（現在未実装）',
+      method: '現在は常に0（未実装）'
+    }
+  };
+
+  // 将来見込み指標の定義と判定方法
+  const futureMetricDefinitions = {
+    totalProjected: {
+      definition: '該当月に実際に稼働する（予定を含む）メンバーの正確な総数',
+      method: '以下の計算式で算出：\n• 継続稼働者数\n• + 新規開始人数\n• + 切替完了人数\n• - 案件終了人数\n• - 契約終了人数'
+    },
+    totalStarting: {
+      definition: 'その月に新たに稼働を開始する見込みのメンバー総数',
+      method: '以下の合計で算出：\n• 新規開始見込み人数\n• + 切替完了見込み人数'
+    },
+    newStarting: {
+      definition: 'その月に新たに稼働を開始する見込みのメンバー数',
+      method: '以下のいずれかの条件を満たすメンバーをカウント：\n• 最新業務開始日が該当月内\n• または Notionステータスが以下のいずれか かつ 最新業務開始日がない：\n  - 案件斡旋\n  - 面接対策\n  - 面接\n  - 結果待ち\n  - 採用'
+    },
+    switchingCompleted: {
+      definition: 'その月に案件切替を完了する見込みのメンバー数',
+      method: '以下のいずれかの条件を満たすメンバーをカウント：\n• 最新業務終了日が存在し、それより後、かつ該当月内に最新業務開始日\n• または 最新業務終了日が存在し、Notionステータスが以下のいずれか：\n  - 案件斡旋\n  - 面接対策\n  - 面接\n  - 結果待ち\n  - 採用'
+    },
+    totalEnding: {
+      definition: 'その月に稼働を終了する見込みのメンバー総数',
+      method: '以下の合計で算出：\n• 案件終了見込み人数\n• + 契約終了見込み人数'
+    },
+    projectEnding: {
+      definition: 'その月に案件を終了する見込みのメンバー数',
+      method: '以下の条件を満たすメンバーをカウント：\n• 最新業務終了日が該当月内'
+    },
+    contractEnding: {
+      definition: 'その月に契約を終了する見込みのメンバー数',
+      method: '以下の条件を満たすメンバーをカウント：\n• 契約終了日が該当月内'
+    }
+  };
+
   const getTypeLabel = (type: string) => {
     const labels: { [key: string]: string } = {
       newStarted: '新規開始人数',
@@ -967,7 +1027,15 @@ export function DetailedStatusTable({
                   </thead>
                   <tbody>
                     <tr>
-                      <td className="border border-gray-300 p-2 font-medium">総稼働者数</td>
+                      <td className="border border-gray-300 p-2 font-medium">
+                        <div className="flex items-center gap-2">
+                          <span>総稼働者数</span>
+                          <SimpleTooltip 
+                            definition={metricDefinitions.totalWorkers.definition}
+                            method={metricDefinitions.totalWorkers.method}
+                          />
+                        </div>
+                      </td>
                       {weeklyMetrics.map((week: any, index: number) => (
                         <td key={index} className="border border-gray-300 p-2 text-center">
                           {week.totalWorkers}
@@ -975,7 +1043,15 @@ export function DetailedStatusTable({
                       ))}
                     </tr>
                     <tr>
-                      <td className="border border-gray-300 p-2 font-medium">総開始人数</td>
+                      <td className="border border-gray-300 p-2 font-medium">
+                        <div className="flex items-center gap-2">
+                          <span>総開始人数</span>
+                          <SimpleTooltip 
+                            definition="その週に新たに稼働を開始したメンバー総数"
+                            method="新規開始人数 + 切替完了人数"
+                          />
+                        </div>
+                      </td>
                       {weeklyMetrics.map((week: any, index: number) => (
                         <td key={index} className="border border-gray-300 p-2 text-center">
                           {week.newStarted + week.switching}
@@ -983,7 +1059,15 @@ export function DetailedStatusTable({
                       ))}
                     </tr>
                     <tr>
-                      <td className="border border-gray-300 p-2 pl-6">新規開始人数</td>
+                      <td className="border border-gray-300 p-2 pl-6">
+                        <div className="flex items-center gap-2">
+                          <span>新規開始人数</span>
+                          <SimpleTooltip 
+                            definition={metricDefinitions.newStarted.definition}
+                            method={metricDefinitions.newStarted.method}
+                          />
+                        </div>
+                      </td>
                       {weeklyMetrics.map((week: any, index: number) => (
                         <td key={index} className="border border-gray-300 p-2 text-center">
                           <CellWithClick 
@@ -996,7 +1080,15 @@ export function DetailedStatusTable({
                       ))}
                     </tr>
                     <tr>
-                      <td className="border border-gray-300 p-2 pl-6">切替完了人数</td>
+                      <td className="border border-gray-300 p-2 pl-6">
+                        <div className="flex items-center gap-2">
+                          <span>切替完了人数</span>
+                          <SimpleTooltip 
+                            definition={metricDefinitions.switching.definition}
+                            method={metricDefinitions.switching.method}
+                          />
+                        </div>
+                      </td>
                       {weeklyMetrics.map((week: any, index: number) => (
                         <td key={index} className="border border-gray-300 p-2 text-center">
                           <CellWithClick 
@@ -1009,7 +1101,15 @@ export function DetailedStatusTable({
                       ))}
                     </tr>
                     <tr>
-                      <td className="border border-gray-300 p-2 font-medium">総終了人数</td>
+                      <td className="border border-gray-300 p-2 font-medium">
+                        <div className="flex items-center gap-2">
+                          <span>総終了人数</span>
+                          <SimpleTooltip 
+                            definition="その週に稼働を終了したメンバー総数"
+                            method="案件終了人数 + 契約終了人数"
+                          />
+                        </div>
+                      </td>
                       {weeklyMetrics.map((week: any, index: number) => (
                         <td key={index} className="border border-gray-300 p-2 text-center">
                           {week.projectEnded + week.contractEnded}
@@ -1017,7 +1117,15 @@ export function DetailedStatusTable({
                       ))}
                     </tr>
                     <tr>
-                      <td className="border border-gray-300 p-2 pl-6">案件終了人数</td>
+                      <td className="border border-gray-300 p-2 pl-6">
+                        <div className="flex items-center gap-2">
+                          <span>案件終了人数</span>
+                          <SimpleTooltip 
+                            definition={metricDefinitions.projectEnded.definition}
+                            method={metricDefinitions.projectEnded.method}
+                          />
+                        </div>
+                      </td>
                       {weeklyMetrics.map((week: any, index: number) => (
                         <td key={index} className="border border-gray-300 p-2 text-center">
                           <CellWithClick 
@@ -1030,7 +1138,15 @@ export function DetailedStatusTable({
                       ))}
                     </tr>
                     <tr>
-                      <td className="border border-gray-300 p-2 pl-6">契約終了人数</td>
+                      <td className="border border-gray-300 p-2 pl-6">
+                        <div className="flex items-center gap-2">
+                          <span>契約終了人数</span>
+                          <SimpleTooltip 
+                            definition={metricDefinitions.contractEnded.definition}
+                            method={metricDefinitions.contractEnded.method}
+                          />
+                        </div>
+                      </td>
                       {weeklyMetrics.map((week: any, index: number) => (
                         <td key={index} className="border border-gray-300 p-2 text-center">
                           <CellWithClick 
@@ -1050,7 +1166,15 @@ export function DetailedStatusTable({
                       <td className="border border-gray-300 p-2 text-center text-gray-400">-</td>
                     </tr>
                     <tr>
-                      <td className="border border-gray-300 p-2 pl-6">カウンセリング開始人数</td>
+                      <td className="border border-gray-300 p-2 pl-6">
+                        <div className="flex items-center gap-2">
+                          <span>カウンセリング開始人数</span>
+                          <SimpleTooltip 
+                            definition={metricDefinitions.counselingStarted.definition}
+                            method={metricDefinitions.counselingStarted.method}
+                          />
+                        </div>
+                      </td>
                       {weeklyMetrics.map((week: any, index: number) => (
                         <td key={index} className="border border-gray-300 p-2 text-center">
                           <CellWithClick 
@@ -1063,7 +1187,15 @@ export function DetailedStatusTable({
                       ))}
                     </tr>
                     <tr>
-                      <td className="border border-gray-300 p-2 pl-6">その他離脱人数</td>
+                      <td className="border border-gray-300 p-2 pl-6">
+                        <div className="flex items-center gap-2">
+                          <span>その他離脱人数</span>
+                          <SimpleTooltip 
+                            definition={metricDefinitions.otherLeft.definition}
+                            method={metricDefinitions.otherLeft.method}
+                          />
+                        </div>
+                      </td>
                       {weeklyMetrics.map((week: any, index: number) => (
                         <td key={index} className="border border-gray-300 p-2 text-center">
                           <CellWithClick 
@@ -1081,31 +1213,6 @@ export function DetailedStatusTable({
             </CardContent>
           </Card>
 
-          {/* 用語の定義（ボタン式ポップアップ） */}
-          <div className="flex justify-end mb-4">
-            <Popover>
-              <PopoverTrigger asChild>
-                <Button variant="outline" size="sm" className="flex items-center gap-2">
-                  <HelpCircle className="h-4 w-4" />
-                  用語の定義
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className="w-96" align="end">
-                <div className="space-y-2 text-sm">
-                  <h4 className="font-semibold text-base mb-3">用語の定義</h4>
-                  <div><strong>総稼働者数:</strong> 今週時点で稼働している人数</div>
-                  <div><strong>総開始人数:</strong> 新規開始人数と切替完了人数の合計人数</div>
-                  <div><strong>新規開始人数:</strong> 新規で案件の稼働が決まった人数</div>
-                  <div><strong>切替完了人数:</strong> 切替が完了し、新規案件となった人数</div>
-                  <div><strong>総終了人数:</strong> 案件終了人数と契約終了人数の合計人数</div>
-                  <div><strong>案件終了人数:</strong> 稼働から切替となった人数</div>
-                  <div><strong>契約終了人数:</strong> Venus Arkとの契約が終了となった人数</div>
-                  <div><strong>カウンセリング開始人数:</strong> Venus Arkと契約締結となった人数</div>
-                  <div><strong>その他離脱人数:</strong> 切替となっていた契約終了となった人数</div>
-                </div>
-              </PopoverContent>
-            </Popover>
-          </div>
 
           {/* 現在の稼働状況メンバー詳細 */}
           <CurrentItemDetails />
@@ -1154,7 +1261,15 @@ export function DetailedStatusTable({
                     </thead>
                     <tbody>
                       <tr>
-                        <td className="border border-gray-300 p-2 font-medium">見込総数稼働者数</td>
+                        <td className="border border-gray-300 p-2 font-medium">
+                          <div className="flex items-center gap-2">
+                            <span>見込総数稼働者数</span>
+                            <SimpleTooltip 
+                              definition={futureMetricDefinitions.totalProjected.definition}
+                              method={futureMetricDefinitions.totalProjected.method}
+                            />
+                          </div>
+                        </td>
                         {[0, 1, 2].map((index) => (
                           <td key={index} className="border border-gray-300 p-2 text-center">
                             {calculateFutureTotals(index).totalWorkers}
@@ -1162,7 +1277,15 @@ export function DetailedStatusTable({
                         ))}
                       </tr>
                       <tr>
-                        <td className="border border-gray-300 p-2 font-medium">総開始見込み人数</td>
+                        <td className="border border-gray-300 p-2 font-medium">
+                          <div className="flex items-center gap-2">
+                            <span>総開始見込み人数</span>
+                            <SimpleTooltip 
+                              definition={futureMetricDefinitions.totalStarting.definition}
+                              method={futureMetricDefinitions.totalStarting.method}
+                            />
+                          </div>
+                        </td>
                         {[0, 1, 2].map((index) => (
                           <td key={index} className="border border-gray-300 p-2 text-center">
                             {calculateFutureTotals(index).totalStarting}
@@ -1170,7 +1293,15 @@ export function DetailedStatusTable({
                         ))}
                       </tr>
                       <tr>
-                        <td className="border border-gray-300 p-2 pl-6">新規開始人数</td>
+                        <td className="border border-gray-300 p-2 pl-6">
+                          <div className="flex items-center gap-2">
+                            <span>新規開始人数</span>
+                            <SimpleTooltip 
+                              definition={futureMetricDefinitions.newStarting.definition}
+                              method={futureMetricDefinitions.newStarting.method}
+                            />
+                          </div>
+                        </td>
                         {adjustedFutureProjectionData.map((data, index) => (
                           <td key={index} className="border border-gray-300 p-2 text-center">
                             <span className="text-orange-500">●</span>
@@ -1179,7 +1310,15 @@ export function DetailedStatusTable({
                         ))}
                       </tr>
                       <tr>
-                        <td className="border border-gray-300 p-2 pl-6">切替完了人数</td>
+                        <td className="border border-gray-300 p-2 pl-6">
+                          <div className="flex items-center gap-2">
+                            <span>切替完了人数</span>
+                            <SimpleTooltip 
+                              definition={futureMetricDefinitions.switchingCompleted.definition}
+                              method={futureMetricDefinitions.switchingCompleted.method}
+                            />
+                          </div>
+                        </td>
                         {adjustedFutureProjectionData.map((data, index) => (
                           <td key={index} className="border border-gray-300 p-2 text-center">
                             <span className="text-orange-500">●</span>
@@ -1188,7 +1327,15 @@ export function DetailedStatusTable({
                         ))}
                       </tr>
                       <tr>
-                        <td className="border border-gray-300 p-2 font-medium">総終了見込み人数</td>
+                        <td className="border border-gray-300 p-2 font-medium">
+                          <div className="flex items-center gap-2">
+                            <span>総終了見込み人数</span>
+                            <SimpleTooltip 
+                              definition={futureMetricDefinitions.totalEnding.definition}
+                              method={futureMetricDefinitions.totalEnding.method}
+                            />
+                          </div>
+                        </td>
                         {[0, 1, 2].map((index) => (
                           <td key={index} className="border border-gray-300 p-2 text-center">
                             {calculateFutureTotals(index).totalEnding}
@@ -1196,7 +1343,15 @@ export function DetailedStatusTable({
                         ))}
                       </tr>
                       <tr>
-                        <td className="border border-gray-300 p-2 pl-6">案件終了人数</td>
+                        <td className="border border-gray-300 p-2 pl-6">
+                          <div className="flex items-center gap-2">
+                            <span>案件終了人数</span>
+                            <SimpleTooltip 
+                              definition={futureMetricDefinitions.projectEnding.definition}
+                              method={futureMetricDefinitions.projectEnding.method}
+                            />
+                          </div>
+                        </td>
                         {adjustedFutureProjectionData.map((data, index) => (
                           <td key={index} className="border border-gray-300 p-2 text-center">
                             <span className="text-orange-500">●</span>
@@ -1205,7 +1360,15 @@ export function DetailedStatusTable({
                         ))}
                       </tr>
                       <tr>
-                        <td className="border border-gray-300 p-2 pl-6">契約終了人数</td>
+                        <td className="border border-gray-300 p-2 pl-6">
+                          <div className="flex items-center gap-2">
+                            <span>契約終了人数</span>
+                            <SimpleTooltip 
+                              definition={futureMetricDefinitions.contractEnding.definition}
+                              method={futureMetricDefinitions.contractEnding.method}
+                            />
+                          </div>
+                        </td>
                         {adjustedFutureProjectionData.map((data, index) => (
                           <td key={index} className="border border-gray-300 p-2 text-center">
                             <span className="text-orange-500">●</span>

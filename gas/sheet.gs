@@ -466,8 +466,8 @@ function getSheetDetailedMetrics(sheet, startDate, endDate, entryIndex) {
       }
     }
     
-    // 受諾: I列系
-    if (interviewDone && isValidDateInRange(interviewDone, startDate, endDate)) {
+    // 受諾: I列系（内定受諾日で週判定）
+    if (acceptedDate && isValidDateInRange(acceptedDate, startDate, endDate)) {
       offerAcceptedCount++;
     }
     
@@ -481,10 +481,9 @@ function getSheetDetailedMetrics(sheet, startDate, endDate, entryIndex) {
       }
     }
 
-    // 不採用理由内訳（面談実施日が対象週のもののみ、転居系は除外）
+    // 不採用理由内訳（応募日が対象週で、応募落ち/書類落ち/不採用系のみ。転居系は除外）
     if (appDate && isValidDateInRange(appDate, startDate, endDate)) {
-      // 面談後に確定した不採用系のみを対象（応募落ち・書類落ちは除外）
-      if (status.includes('不採用') || status.includes('採用辞退') || (status.includes('書類落ち') || status.includes('応募落ち'))) {
+      if (status.includes('不採用') || status.includes('書類落ち') || status.includes('応募落ち')) {
         if (reason) {
           if (reason.includes('経験者')) {
             rejection.experienced++;
@@ -494,12 +493,20 @@ function getSheetDetailedMetrics(sheet, startDate, endDate, entryIndex) {
             rejection.unsuitable++;
           } else if (reason.includes('外国籍') || reason.includes('国籍')) {
             rejection.foreign++;
-          } else if (reason.includes('辞退') || reason.includes('内定後') || reason.includes('採用辞退')) {
-            rejection.declined++;
           } else if (!(reason.includes('転居') || reason.includes('引っ越し') || reason.includes('上京'))) {
             rejection.other++;
           }
         }
+      }
+    }
+
+    // 内定後辞退（エントリーフォームのタイムスタンプ基準）
+    if (status.includes('採用辞退')) {
+      const normalized = normalizeName(nameValue);
+      const stamps = entryIndex[normalized] || [];
+      const matched = findNearestTimestampWithinWindow(stamps, appDate, 30);
+      if (matched && isValidDateInRange(matched, startDate, endDate)) {
+        rejection.declined++;
       }
     }
     

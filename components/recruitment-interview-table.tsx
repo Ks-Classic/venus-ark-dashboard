@@ -6,6 +6,8 @@ import { Button } from '@/components/ui/button';
 import { WeeklyReport } from '@/lib/types/weekly_report';
 import { CellData } from '@/lib/types/recruitment_dashboard';
 import { getWeekDateRange, getWeekNumberFromDate } from '@/lib/date';
+import { SimpleTooltip } from '@/components/ui/simple-tooltip';
+import { RECRUITMENT_INTERVIEW_METRICS_DEFINITIONS } from '@/lib/constants/recruitment-metrics-definitions';
 
 interface RecruitmentInterviewTableProps {
   reports: WeeklyReport[];
@@ -121,7 +123,15 @@ export function RecruitmentInterviewTable({
             <tbody>
               {METRICS.map(({ key, label }) => (
                 <tr key={key} className="hover:bg-gray-50">
-                  <td className="py-2 px-3 border-b text-sm font-medium">{label}</td>
+                  <td className="py-2 px-3 border-b text-sm font-medium">
+                    <div className="flex items-center gap-2">
+                      <span>{label}</span>
+                      <SimpleTooltip 
+                        definition={RECRUITMENT_INTERVIEW_METRICS_DEFINITIONS[key]?.definition || ''}
+                        method={RECRUITMENT_INTERVIEW_METRICS_DEFINITIONS[key]?.method || ''}
+                      />
+                    </div>
+                  </td>
                   {displayReports.map((report, index) => (
                     <td key={index} className="text-center py-2 px-3 border-b">
                       <ClickableCell report={report} metricKey={key} label={label} />
@@ -133,7 +143,15 @@ export function RecruitmentInterviewTable({
                 </tr>
               ))}
               <tr className="hover:bg-gray-50 bg-blue-25">
-                <td className="py-2 px-3 border-b text-sm font-medium text-blue-700">面接実施率</td>
+                <td className="py-2 px-3 border-b text-sm font-medium text-blue-700">
+                  <div className="flex items-center gap-2">
+                    <span>面接実施率</span>
+                    <SimpleTooltip 
+                      definition={RECRUITMENT_INTERVIEW_METRICS_DEFINITIONS.interviewRate?.definition || ''}
+                      method={RECRUITMENT_INTERVIEW_METRICS_DEFINITIONS.interviewRate?.method || ''}
+                    />
+                  </div>
+                </td>
                 {displayReports.map((report, index) => (
                   <td key={index} className="text-center py-2 px-3 border-b text-blue-600 font-medium">
                     {calculateRate('interviewConducted', 'interviewScheduled', report)}
@@ -144,7 +162,15 @@ export function RecruitmentInterviewTable({
                 </td>
               </tr>
               <tr className="hover:bg-gray-50 bg-green-25">
-                <td className="py-2 px-3 border-b text-sm font-medium text-green-700">内定受諾率</td>
+                <td className="py-2 px-3 border-b text-sm font-medium text-green-700">
+                  <div className="flex items-center gap-2">
+                    <span>内定受諾率</span>
+                    <SimpleTooltip 
+                      definition={RECRUITMENT_INTERVIEW_METRICS_DEFINITIONS.acceptanceRate?.definition || ''}
+                      method={RECRUITMENT_INTERVIEW_METRICS_DEFINITIONS.acceptanceRate?.method || ''}
+                    />
+                  </div>
+                </td>
                 {displayReports.map((report, index) => (
                   <td key={index} className="text-center py-2 px-3 border-b text-green-600 font-medium">
                     {calculateRate('offerAcceptedCount', 'hireCount', report)}
