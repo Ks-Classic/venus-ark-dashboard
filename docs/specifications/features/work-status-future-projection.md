@@ -43,7 +43,7 @@
 | totalProjected | 見込総数稼働者数 | 継続稼働者数 + 新規開始人数 + 切替完了人数 - 案件終了人数 - 契約終了人数<br/>（継続稼働者数 = 該当月より前に開始し、該当月も継続して稼働する人数） |
 | totalStarting | 総開始見込み人数 | `newStarting + switching` (UI 計算) |
 | totalEnding    | 総終了見込み人数 | `projectEnding + contractEnding` (UI 計算) |
-| newStarting    | 新規開始人数 | （`lastWorkStartDate` が該当月 OR Notionステータスが「案件斡旋」、「面接対策」、「面接」、「結果待ち」、「採用」のいずれか）かつ、lastWorkStartDateがない |
+| newStarting    | 新規開始人数 | （`lastWorkStartDate` が該当月 かつ `lastWorkEndDate`がない）OR（Notionステータスが「案件斡旋」、「面接対策」、「面接」、「結果待ち」、「採用」のいずれか かつ `lastWorkStartDate`がない かつ `lastWorkEndDate`がない） |
 | switching      | 切替完了人数 | （`lastWorkEndDate` が存在し、それより後、かつ、該当月内に `lastWorkStartDate`）OR（`lastWorkEndDate` が存在し、Notionステータスが「案件斡旋」、「面接対策」、「面接」、「結果待ち」、「採用」のいずれか） |
 | projectEnding  | 案件終了人数 | `lastWorkEndDate` が該当月 |
 | contractEnding | 契約終了人数 | `contractEndDate` が該当月 |

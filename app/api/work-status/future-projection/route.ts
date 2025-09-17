@@ -219,7 +219,7 @@ export async function GET(request: NextRequest) {
           MemberStatus.INTERVIEW,
           MemberStatus.RESULT_WAITING,
           MemberStatus.HIRED
-        ].includes(member.status as MemberStatus) && !member.lastWorkStartDate;
+        ].includes(member.status as MemberStatus) && !member.lastWorkStartDate && !member.lastWorkEndDate;
         
         // 重複除去チェック
         let shouldAddToNewStarting = false;
