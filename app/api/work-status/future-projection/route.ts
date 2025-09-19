@@ -110,19 +110,48 @@ export async function GET(request: NextRequest) {
     const projections: FutureProjectionData[] = [];
     const currentDate = new Date();
     
-    // 初期の継続稼働者数を計算（当月開始前の稼働者数）
+    // 継続稼働者数 = 前月最終週の総稼働者数
     let baseActiveMembers = 0;
-    const baseMonth = new Date(year, month - 1, 1);
     
+    // 前月の最終週を計算
+    const previousMonth = month === 1 ? 12 : month - 1;
+    const previousYear = month === 1 ? year - 1 : year;
+    
+    // 前月の最終日を取得
+    const lastDayOfPreviousMonth = new Date(previousYear, previousMonth, 0);
+    
+    // 前月最終週の総稼働者数を計算（isWorkingAtDate関数と同じロジック）
     for (const member of members) {
-      if (member.lastWorkStartDate && member.lastWorkStartDate < baseMonth) {
-        if (!member.lastWorkEndDate || member.lastWorkEndDate >= baseMonth) {
-          baseActiveMembers++;
-        }
+      const startDate = member.lastWorkStartDate;
+      const endDate = member.lastWorkEndDate;
+      const contractEndDate = member.contractEndDate;
+      
+      // 開始がない、または前月最終日より後は非稼働
+      if (!startDate || startDate > lastDayOfPreviousMonth) continue;
+      
+      // 契約終了で締まっていれば非稼働
+      if (contractEndDate && contractEndDate <= lastDayOfPreviousMonth) continue;
+      
+      // 終了が未設定なら稼働
+      if (!endDate) {
+        baseActiveMembers++;
+        continue;
       }
+      
+      // 再稼働パターンは稼働
+      if (endDate < startDate) {
+        baseActiveMembers++;
+        continue;
+      }
+      
+      // 前月最終日以前に終了していれば非稼働
+      if (endDate <= lastDayOfPreviousMonth) continue;
+      
+      // 前月最終日より後に終了 → 稼働
+      baseActiveMembers++;
     }
     
-    console.log(`[DEBUG] 基準稼働者数（${year}年${month}月開始前）: ${baseActiveMembers}名`);
+    console.log(`[DEBUG] 継続稼働者数（${previousYear}年${previousMonth}月最終週総稼働者数）: ${baseActiveMembers}名`);
     
     // 累積稼働者数を追跡
     let cumulativeActiveMembers = baseActiveMembers;

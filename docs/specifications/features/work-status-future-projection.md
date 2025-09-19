@@ -77,11 +77,40 @@ Firestore.members
 
 ### 5.1 見込総数稼働者数計算
 ```typescript
-// 継続稼働者数: 該当月より前に開始し、該当月も継続して稼働する人
+// 継続稼働者数 = 前月最終週の総稼働者数
 let continuingActiveMembers = 0;
-if (member.lastWorkStartDate && member.lastWorkStartDate < monthStart) {
-  // 最新業務終了日が空白、または対象月の終了日以降の場合
-  if (!member.lastWorkEndDate || member.lastWorkEndDate >= monthEnd) {
+
+// 前月の最終日を取得
+const previousMonth = month === 1 ? 12 : month - 1;
+const previousYear = month === 1 ? year - 1 : year;
+const lastDayOfPreviousMonth = new Date(previousYear, previousMonth, 0);
+
+// 前月最終週の総稼働者数を計算
+for (const member of members) {
+  const startDate = member.lastWorkStartDate;
+  const endDate = member.lastWorkEndDate;
+  const contractEndDate = member.contractEndDate;
+  
+  // 開始がない、または前月最終日より後は非稼働
+  if (!startDate || startDate > lastDayOfPreviousMonth) continue;
+  
+  // 契約終了で締まっていれば非稼働
+  if (contractEndDate && contractEndDate <= lastDayOfPreviousMonth) continue;
+  
+  // 終了が未設定なら稼働
+  if (!endDate) {
+    continuingActiveMembers++;
+    continue;
+  }
+  
+  // 再稼働パターンは稼働
+  if (endDate < startDate) {
+    continuingActiveMembers++;
+    continue;
+  }
+  
+  // 前月最終日より後に終了 → 稼働
+  if (endDate > lastDayOfPreviousMonth) {
     continuingActiveMembers++;
   }
 }
@@ -93,7 +122,7 @@ const totalProjected = continuingActiveMembers + newStartingMembers.length + swi
 ### 5.2 各指標の関係性について
 **重要**: 見込総数稼働者数は以下の構成要素から算出されます：
 
-1. **継続稼働者数**: 該当月より前に開始し、該当月も継続して稼働する人数
+1. **継続稼働者数**: 前月最終週の総稼働者数
 2. **新規開始人数**: その月に新たに稼働を開始するメンバー数
 3. **切替完了人数**: その月に案件切替を完了するメンバー数
 
@@ -106,7 +135,7 @@ const totalProjected = continuingActiveMembers + newStartingMembers.length + swi
 - **契約終了人数**: その月に契約を終了するメンバー数（見込総数から差し引かれる）
 
 例：7月の場合
-- 6月から継続稼働: 100人 → 継続稼働者数
+- 6月最終週総稼働者数: 100人 → 継続稼働者数
 - 7月新規開始: 5人 → 新規開始人数  
 - 7月切替完了: 2人 → 切替完了人数
 - 7月案件終了: 3人 → 案件終了人数
