@@ -41,12 +41,11 @@
   - `recruitment_metrics.applyRejectCount`
 
 ### 3. 選考継続数（応募）（applyContinueCount）
-- Sheets → ETL
-  - ソース: 採用管理シート `応募日/応募日時` と `ステータス`
+- 計算式: **応募数 - 応募内不採用数**
 - 週次算出
-  - ベース集合: `application_date between [week_start, week_end]`
-  - 未クローズ条件: `status NOT IN ('採用','不採用','辞退','離脱','応募落ち','書類落ち','採用辞退','面談不参加','内定受諾')`
-  - 集計: 件数
+  - 応募数: `application_date between [week_start, week_end]` の件数
+  - 応募内不採用数: 上記のうち `status = '応募落ち'` の件数
+  - 選考継続数: 応募数 - 応募内不採用数
 - レポート反映
   - `recruitment_metrics.applyContinueCount`
 

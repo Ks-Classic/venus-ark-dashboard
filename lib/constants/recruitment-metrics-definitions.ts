@@ -19,7 +19,7 @@ export const RECRUITMENT_COLLECTION_METRICS_DEFINITIONS: Record<string, MetricDe
   applyContinueCount: {
     label: '選考継続(応募)',
     definition: '対象週に応募した応募者のうち、選考が継続中の件数',
-    method: '以下の条件をすべて満たす応募者をカウント：\n• 採用管理シートの「応募日」列が対象週内\n• 採用管理シートの「現状ステータス」列が「フォーム回答待ち」\n\n選考継続の状態：\n• 応募は完了しているが、次のステップ（書類提出など）を待機中\n• 応募者からの追加アクションが必要な状態'
+    method: '計算式：応募数 - 応募内不採用数\n\n詳細：\n• 応募数：対象週に応募日が含まれる全応募者数\n• 応募内不採用数：上記のうち「応募落ち」ステータスの件数\n• 結果：応募したが「応募落ち」ではない応募者数（選考継続中）'
   },
   documentSubmitted: {
     label: '書類提出数',

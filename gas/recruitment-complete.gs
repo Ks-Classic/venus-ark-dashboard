@@ -1,6 +1,6 @@
 /**
- * 採用活動完全版レポート生成スクリプト
- * 全指標を計算し、フィルタ機能付き
+ * 採用活動レポート生成スクリプト（Web API専用版）
+ * Next.jsアプリケーションからの呼び出し専用
  * スプレッドシートからの直接データ取得・集計
  * 
  * 対応シート:
@@ -14,89 +14,7 @@ const SPREADSHEET_IDS = {
   ENTRY_FORM: '1lcjC-KOH8OD9Ar3J4XIPz62vSRLI7xfXCwKM2o7PRjY' // エントリーフォーム
 };
 
-// メニュー作成
-function onOpen() {
-  const ui = SpreadsheetApp.getUi();
-  ui.createMenu('採用活動レポート')
-    .addItem('週次レポート生成', 'showWeeklyReportDialog')
-    .addItem('フィルタ付きレポート', 'showFilteredReportDialog')
-    .addItem('データ整合性チェック', 'checkDataIntegrity')
-    .addItem('全週レポート一括生成', 'generateAllWeeksReport')
-    .addToUi();
-}
 
-/**
- * 週次レポート生成ダイアログ表示
- */
-function showWeeklyReportDialog() {
-  const html = HtmlService.createTemplateFromFile('WeeklyReportDialog');
-  html.weeks = generateWeekOptions();
-  
-  const template = html.evaluate()
-    .setWidth(400)
-    .setHeight(300);
-  
-  SpreadsheetApp.getUi().showModalDialog(template, '週次レポート生成');
-}
-
-/**
- * フィルタ付きレポートダイアログ表示
- */
-function showFilteredReportDialog() {
-  const html = HtmlService.createTemplateFromFile('FilteredReportDialog');
-  html.weeks = generateWeekOptions();
-  html.platforms = [
-    { value: 'all', label: 'すべて' },
-    { value: 'indeed', label: 'Indeed' },
-    { value: 'engage', label: 'Engage' }
-  ];
-  html.jobCategories = [
-    { value: 'all', label: 'すべて' },
-    { value: '動画クリエイター', label: '動画クリエイター' },
-    { value: '動画編集', label: '動画編集' },
-    { value: 'AIライター', label: 'AIライター' },
-    { value: 'ライター', label: 'ライター' },
-    { value: '撮影スタッフ', label: '撮影スタッフ' },
-    { value: 'SNS運用', label: 'SNS運用' }
-  ];
-  
-  const template = html.evaluate()
-    .setWidth(500)
-    .setHeight(400);
-  
-  SpreadsheetApp.getUi().showModalDialog(template, 'フィルタ付きレポート生成');
-}
-
-/**
- * 週選択オプション生成
- */
-function generateWeekOptions() {
-  const weeks = [];
-  const currentDate = new Date();
-  const currentYear = currentDate.getFullYear();
-  
-  // 過去12週分を生成（新ルールで週の所属月を計算）
-  for (let i = 0; i < 12; i++) {
-    const weekDate = new Date(currentDate);
-    weekDate.setDate(currentDate.getDate() - (i * 7));
-    
-    // 新ルールで週の開始日（土曜日）を計算
-    const weekStart = getWeekStartFromAnyDate(weekDate);
-    
-    // 多数決で週が属する月を決定
-    const assignedMonth = getAssignedMonthByMajority(weekStart);
-    
-    // その月内での週番号を計算
-    const weekInMonth = getWeekNumberInAssignedMonth(assignedMonth.year, assignedMonth.month, weekStart);
-    
-    weeks.push({
-      value: `${assignedMonth.month}月${weekInMonth}W`,
-      label: `${assignedMonth.month}月${weekInMonth}W (${weekStart.getFullYear()}/${assignedMonth.month}/${weekStart.getDate()})`
-    });
-  }
-  
-  return weeks;
-}
 
 /**
  * フィルタ付きレポート生成
@@ -530,26 +448,9 @@ function calculateAllMetrics(sheets, weekRange) {
     
     // 3. 計算値（添付画像の形式に完全対応）
     console.log('🧮 計算値の算出開始');
-    // 選考継続(応募): 「フォーム回答待ち」の実数
-    const applyContinueCount = (function() {
-      let count = 0;
-      sheets.forEach(sheet => {
-        const data = sheet.getDataRange().getValues();
-        if (data.length <= 1) return;
-        const headers = data[0];
-        const headerMap = {};
-        headers.forEach((h, idx) => headerMap[h] = idx);
-        for (let i = 1; i < data.length; i++) {
-          const row = data[i];
-          const applicationDate = row[headerMap['応募日']] || row[headerMap['応募日時']];
-          const status = (row[headerMap['ステータス']] || row[headerMap['現状ステータス']] || '').toString();
-          if (isDateInRange(applicationDate, startDate, endDate) && status.includes('フォーム回答待ち')) {
-            count++;
-          }
-        }
-      });
-      return count;
-    })();
+    // 選考継続(応募): 応募数 - 応募内不採用数
+    const applyContinueCount = totalApplyCount - totalApplyRejected;
+    console.log(`📊 選考継続(応募): ${totalApplyCount} - ${totalApplyRejected} = ${applyContinueCount}`);
     const documentContinueCount = totalDocumentSubmitted - totalDocRejected;
     
     // 面接実施率の計算（分母が0の場合は0%）
@@ -605,104 +506,6 @@ function calculateAllMetrics(sheets, weekRange) {
   }
 }
 
-/**
- * 応募フォームシートから書類提出数を抽出
- */
-function getDocumentSubmissionCountFromFormSheet(weekRange) {
-  try {
-    console.log('📋 エントリーフォーム処理開始');
-    
-    // エントリーフォームのスプレッドシートにアクセス
-    const spreadsheet = SpreadsheetApp.openById(SPREADSHEET_IDS.ENTRY_FORM);
-    console.log(`✅ エントリーフォームスプレッドシートにアクセス成功: ${spreadsheet.getName()}`);
-    
-    // 利用可能なシートを確認
-    const allSheets = spreadsheet.getSheets();
-    console.log(`📋 利用可能なシート数: ${allSheets.length}`);
-    allSheets.forEach((sheet, index) => {
-      console.log(`  ${index + 1}. ${sheet.getName()}`);
-    });
-    
-    // シート名の候補を試す（エントリーフォームの実際のシート名に基づく）
-    const possibleSheetNames = [
-      '求人エントリーフォーム_株式会社VenusArk（回答）',  // 実際のシート名
-      'フォームの回答 1',
-      '応募フォーム', 
-      'フォーム回答', 
-      '回答'
-    ];
-    
-    let formSheet = null;
-    let foundSheetName = '';
-    
-    for (const sheetName of possibleSheetNames) {
-      formSheet = spreadsheet.getSheetByName(sheetName);
-      if (formSheet) {
-        foundSheetName = sheetName;
-        console.log(`✅ シート「${sheetName}」を発見`);
-        break;
-      }
-    }
-    
-    if (!formSheet) {
-      console.log('❌ エントリーフォームシートが見つかりません');
-      console.log('利用可能なシート:', allSheets.map(s => s.getName()));
-      return 0;
-    }
-    
-    const data = formSheet.getDataRange().getValues();
-    console.log(`📊 エントリーフォームデータ行数: ${data.length}`);
-    
-    if (data.length <= 1) {
-      console.log('⚠️ エントリーフォームにデータがありません');
-      return 0;
-    }
-    
-    const headers = data[0];
-    console.log(`📋 エントリーフォームヘッダー: ${headers.join(', ')}`);
-    
-    // タイムスタンプ列のインデックスを取得（A列の「タイムスタンプ」）
-    const timestampIndex = 0; // A列は固定
-    console.log(`✅ タイムスタンプ列「${headers[timestampIndex]}」を使用 (列${timestampIndex + 1})`);
-    
-    // 名前列のインデックスを取得
-    const nameIndex = headers.findIndex(h => h === '名前');
-    if (nameIndex === -1) {
-      console.log('⚠️ 名前列が見つかりません');
-    } else {
-      console.log(`✅ 名前列「${headers[nameIndex]}」を使用 (列${nameIndex + 1})`);
-    }
-    
-    let submissionCount = 0;
-    const startDate = new Date(weekRange.start);
-    const endDate = new Date(weekRange.end);
-    
-    console.log(`📅 対象期間: ${startDate.toISOString()} 〜 ${endDate.toISOString()}`);
-    
-    // 各行のタイムスタンプをチェック
-    for (let i = 1; i < data.length; i++) {
-      try {
-        const timestamp = data[i][timestampIndex];
-        const name = nameIndex !== -1 ? data[i][nameIndex] : '名前なし';
-        
-        if (timestamp && isDateInRange(timestamp, startDate, endDate)) {
-          submissionCount++;
-          console.log(`  📝 書類提出: ${timestamp} - ${name}`);
-        }
-      } catch (rowError) {
-        console.log(`  ⚠️ 行${i + 1}の処理でエラー: ${rowError.message}`);
-      }
-    }
-    
-    console.log(`📋 エントリーフォーム: ${weekRange.start}〜${weekRange.end} の書類提出数: ${submissionCount}件`);
-    return submissionCount;
-    
-  } catch (error) {
-    console.log(`❌ エントリーフォーム処理エラー: ${error.message}`);
-    console.log(`📋 エラースタック: ${error.stack}`);
-    return 0;
-  }
-}
 
 /**
  * 正規化名を生成
@@ -715,43 +518,7 @@ function normalizeName(name) {
     .toLowerCase();
 }
 
-/**
- * エントリーフォームのインデックスを構築: 正規化名 -> タイムスタンプ配列
- */
-function buildEntryFormTimestampIndex() {
-  const index = {};
-  const spreadsheet = SpreadsheetApp.openById(SPREADSHEET_IDS.ENTRY_FORM);
-  const sheet = spreadsheet.getSheetByName('求人エントリーフォーム_株式会社VenusArk（回答）') || spreadsheet.getSheets()[0];
-  const data = sheet.getDataRange().getValues();
-  if (data.length <= 1) return index;
-  const headers = data[0];
-  const nameIdx = headers.findIndex(h => h === '名前');
-  const tsIdx = 0; // タイムスタンプ(A)
-  for (let i = 1; i < data.length; i++) {
-    const row = data[i];
-    const n = normalizeName(nameIdx !== -1 ? row[nameIdx] : '');
-    const ts = row[tsIdx];
-    if (!n || !ts) continue;
-    if (!index[n]) index[n] = [];
-    index[n].push(new Date(ts));
-  }
-  // 各配列を昇順ソート
-  Object.keys(index).forEach(k => index[k].sort((a,b)=>a-b));
-  return index;
-}
 
-/**
- * 応募フォームのタイムスタンプのうち、対象週に入る件数を数える
- */
-function countFormSubmissionsInWeek(entryFormIndex, startDate, endDate) {
-  const start = new Date(startDate);
-  const end = new Date(endDate);
-  let count = 0;
-  Object.values(entryFormIndex).forEach(arr => {
-    arr.forEach(d => { if (d >= start && d <= end) count++; });
-  });
-  return count;
-}
 
 /**
  * 応募日近接(±days)で最も近いフォームタイムスタンプを返す
@@ -1090,129 +857,7 @@ function doPost(e) {
   }
 }
 
-/**
- * データ整合性チェック
- */
-function checkDataIntegrity() {
-  try {
-    const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
-    const sheets = spreadsheet.getSheets();
-    
-    let report = '=== データ整合性チェック結果 ===\n\n';
-    
-    sheets.forEach(sheet => {
-      const sheetName = sheet.getName();
-      if (sheetName === '応募フォーム') return; // 応募フォームシートは除外
-      
-      const data = sheet.getDataRange().getValues();
-      if (data.length <= 1) {
-        report += `⚠️ ${sheetName}: データが不足しています\n`;
-        return;
-      }
-      
-      const headers = data[0];
-      const requiredColumns = ['応募日', '現状ステータス', '名前'];
-      const missingColumns = requiredColumns.filter(col => !headers.includes(col));
-      
-      if (missingColumns.length > 0) {
-        report += `❌ ${sheetName}: 不足している列: ${missingColumns.join(', ')}\n`;
-      } else {
-        report += `✅ ${sheetName}: 必要な列が揃っています\n`;
-      }
-      
-      // データ件数チェック
-      const dataRows = data.length - 1;
-      report += `   データ件数: ${dataRows}件\n`;
-      
-      // 日付データの整合性チェック
-      const dateColumnIndex = headers.findIndex(h => h === '応募日');
-      if (dateColumnIndex !== -1) {
-        let validDates = 0;
-        let invalidDates = 0;
-        
-        for (let i = 1; i < data.length; i++) {
-          const dateValue = data[i][dateColumnIndex];
-          if (dateValue && isValidDate(dateValue)) {
-            validDates++;
-          } else if (dateValue) {
-            invalidDates++;
-          }
-        }
-        
-        report += `   有効な日付: ${validDates}件, 無効な日付: ${invalidDates}件\n`;
-      }
-      
-      report += '\n';
-    });
-    
-    // 結果を表示
-    SpreadsheetApp.getUi().alert('データ整合性チェック', report, SpreadsheetApp.getUi().ButtonSet.OK);
-    
-  } catch (error) {
-    SpreadsheetApp.getUi().alert('エラー', 'データ整合性チェック中にエラーが発生しました: ' + error.message, SpreadsheetApp.getUi().ButtonSet.OK);
-  }
-}
 
-/**
- * 全週レポート一括生成
- */
-function generateAllWeeksReport() {
-  try {
-    const weeks = generateWeekOptions();
-    let allReports = [];
-    
-    weeks.forEach(week => {
-      const report = generateFilteredReport(week.value, 'all', 'all');
-      if (report.success) {
-        allReports.push(report);
-      }
-    });
-    
-    // 結果を新しいシートに出力
-    const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
-    const reportSheet = spreadsheet.getSheetByName('全週レポート') || spreadsheet.insertSheet('全週レポート');
-    
-    // ヘッダー行を作成
-    const headers = [
-      '週', '期間', '応募数', '書類提出数', '面接予定数', '面接実施数', 
-      '採用者数', '内定受諾数', '応募不採用数', '書類不採用数', 
-      '面接辞退数', '離脱数', '継続応募数', '継続書類数', 
-      '面接率(%)', '受諾率(%)'
-    ];
-    
-    reportSheet.clear();
-    reportSheet.getRange(1, 1, 1, headers.length).setValues([headers]);
-    
-    // データ行を作成
-    const reportData = allReports.map(report => [
-      report.week,
-      report.dateRange,
-      report.metrics.applyCount,
-      report.metrics.documentSubmitted,
-      report.metrics.interviewScheduled,
-      report.metrics.interviewConducted,
-      report.metrics.hired,
-      report.metrics.accepted,
-      report.metrics.applyRejected,
-      report.metrics.docRejected,
-      report.metrics.interviewCancelled,
-      report.metrics.left,
-      report.metrics.applyContinueCount,
-      report.metrics.documentContinueCount,
-      report.metrics.interviewRate,
-      report.metrics.acceptanceRate
-    ]);
-    
-    if (reportData.length > 0) {
-      reportSheet.getRange(2, 1, reportData.length, headers.length).setValues(reportData);
-    }
-    
-    SpreadsheetApp.getUi().alert('完了', `${allReports.length}週分のレポートを生成しました。`, SpreadsheetApp.getUi().ButtonSet.OK);
-    
-  } catch (error) {
-    SpreadsheetApp.getUi().alert('エラー', '全週レポート生成中にエラーが発生しました: ' + error.message, SpreadsheetApp.getUi().ButtonSet.OK);
-  }
-}
 
 /**
  * 日付の妥当性チェック

@@ -16,13 +16,12 @@ interface RejectionReasonTableProps {
   selectedWeek: number;
 }
 
-// テーブルに表示する指標の定義（修正後）
+// テーブルに表示する指標の定義（転居確認を非表示）
 const METRICS = [
   { key: 'experienced', label: '経験者' },
   { key: 'elderly', label: '高齢' },
   { key: 'unsuitable', label: '不適合' },
   { key: 'foreign', label: '外国籍' },
-  { key: 'relocation_check', label: '転居確認' },
   { key: 'post_offer_withdrawal', label: '内定後辞退' },
   { key: 'other', label: 'その他' },
 ];
